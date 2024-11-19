@@ -8,13 +8,12 @@ class HeroTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     private var vm = HeroesViewModel()
     private var cancellables = Set<AnyCancellable>()
-    private var loadingIndicator: UIActivityIndicatorView!
-
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         setupTableView()
-        setupLoadingIndicator()
         configUI()
     }
 
@@ -48,22 +47,6 @@ class HeroTableViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.register(UINib(nibName: "HeroTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         tableView.dataSource = self
         tableView.delegate = self
-    }
-
-    private func setupLoadingIndicator() {
-        // Crear el indicador
-        loadingIndicator = UIActivityIndicatorView(style: .medium)
-        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
-        loadingIndicator.hidesWhenStopped = true
-        
-        // Añadirlo a la vista principal
-        view.addSubview(loadingIndicator)
-        
-        // Configurar las restricciones para centrarlo
-        NSLayoutConstraint.activate([
-            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
     }
 
     private func configUI() {
@@ -109,7 +92,7 @@ class HeroTableViewController: UIViewController, UITableViewDataSource, UITableV
         if let url = URL(string: hero.photo) {
             cell.photo.loadImageRemote(url: url)
         }
-
+        
         return cell
     }
 

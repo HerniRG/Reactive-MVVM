@@ -40,13 +40,14 @@ class DetailsViewController: UIViewController {
     // MARK: - Setup Methods
     private func setupUI() {
         self.title = vm.heroe.name
-        self.imageView.loadImageRemote(url: URL(string: vm.heroe.photo)!)
+        if let url = URL(string: vm.heroe.photo) {
+            self.imageView.loadImageRemote(url: url)
+        }
         self.descriptionLabel.text = vm.heroe.description
         
         // Configuración inicial del CollectionView
         transformationsCollectionView.isHidden = true
-        transformationsCollectionView.register(UINib(nibName: "TransformationCollectionViewCell", bundle: nil),
-                                               forCellWithReuseIdentifier: "TransformationCell")
+        transformationsCollectionView.register(UINib(nibName: "TransformationCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TransformationCell")
         transformationsCollectionView.dataSource = self
         transformationsCollectionView.delegate = self
     }
