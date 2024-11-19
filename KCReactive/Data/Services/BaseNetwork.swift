@@ -12,7 +12,7 @@ struct BaseNetwork {
         guard let url = URL(string: url) else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = httpMethod
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(HTTPMethods.content, forHTTPHeaderField: "Content-Type")
         
         if let body = body {
             request.httpBody = try? JSONEncoder().encode(body)

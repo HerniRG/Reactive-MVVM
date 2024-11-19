@@ -5,6 +5,7 @@ class HeroTableViewController: UIViewController, UITableViewDataSource, UITableV
 
     
     @IBOutlet weak var tableView: UITableView!
+    
     private var vm = HeroesViewModel()
     private var cancellables = Set<AnyCancellable>()
     private var loadingIndicator: UIActivityIndicatorView!
@@ -15,9 +16,6 @@ class HeroTableViewController: UIViewController, UITableViewDataSource, UITableV
         setupTableView()
         setupLoadingIndicator()
         configUI()
-        
-        // Llamar a loadHeroes al cargar la vista
-        vm.loadHeroes()
     }
 
     private func setupNavigationBar() {
@@ -117,5 +115,12 @@ class HeroTableViewController: UIViewController, UITableViewDataSource, UITableV
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 160
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedHero = vm.heroes[indexPath.row]
+        let detailViewModel = DetailsViewModel(heroe: selectedHero)
+        let detailViewController = DetailsViewController(viewModel: detailViewModel)
+        navigationController?.pushViewController(detailViewController, animated: true)
     }
 }

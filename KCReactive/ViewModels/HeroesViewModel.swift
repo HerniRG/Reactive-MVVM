@@ -8,40 +8,54 @@
 import Combine
 import Foundation
 
+@MainActor
 final class HeroesViewModel: ObservableObject {
-    // Lista de héroes
-    @Published var heroes: [Hero] = []
+    @Published var heroes: [Hero] = [] // Lista de héroes
     @Published var isLoading: Bool = false // Estado de carga
     @Published var errorMessage: String? = nil // Mensaje de error opcional
     
-    private var cancellables = Set<AnyCancellable>() // Set para almacenar los suscriptores
-    private let heroService = HeroService() // Dependencia para realizar peticiones
+    private var heroService = HeroService() // Dependencia para realizar peticiones
     
-    func loadHeroes() {
+    // MARK: - Initializer
+    init(heroService: HeroService = HeroService()) {
+        self.heroService = heroService
+        Task {
+            await loadHeroes()
+        }
+    }
+    
+    func loadHeroes() async {
         isLoading = true
         errorMessage = nil
         
-        heroService.getHeroes(filter: "")
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                // Manejo de errores
-                self?.isLoading = false
-                switch completion {
-                case .failure(let error):
-                    self?.errorMessage = "Error al cargar héroes: \(error.localizedDescription)"
-                case .finished:
-                    break
-                }
-            } receiveValue: { [weak self] heroes in
-                // Actualizar la lista de héroes
-                self?.heroes = heroes
-                self?.isLoading = false
-            }
-            .store(in: &cancellables)
+        do {
+            let heroes = try await heroService.getHeroes(filter: "")
+            self.heroes = heroes
+        } catch {
+            handleLoadHeroesError(error)
+        }
+        
+        isLoading = false
     }
     
     // Borra el token del Keychain para cerrar sesión
     func logout() {
         TokenManager.shared.deleteToken()
+    }
+    
+    // MARK: - Private Methods
+    private func handleLoadHeroesError(_ error: Error) {
+        if let urlError = error as? URLError {
+            switch urlError.code {
+            case .notConnectedToInternet:
+                errorMessage = "No hay conexión a internet. Por favor, verifica tu red."
+            case .timedOut:
+                errorMessage = "La solicitud ha tardado demasiado. Inténtalo más tarde."
+            default:
+                errorMessage = "Ha ocurrido un error. Intenta nuevamente."
+            }
+        } else {
+            errorMessage = "Ha ocurrido un error desconocido."
+        }
     }
 }

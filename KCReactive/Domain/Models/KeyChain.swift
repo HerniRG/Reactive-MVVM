@@ -16,17 +16,17 @@ final class TokenManager {
     
     func saveToken(_ token: String) {
         keychain.set(token, forKey: tokenKey)
-        print("Token guardado correctamente: \(token)")
+        debugPrint("Token guardado correctamente: \(token)")
     }
     
     func loadToken() -> String? {
         let token = keychain.get(tokenKey)
-        print("Token recuperado: \(token ?? "No encontrado")")
+        debugPrint("Token recuperado: \(token ?? "No encontrado")")
         return token
     }
     
     func deleteToken() {
         keychain.delete(tokenKey)
-        print("Token eliminado")
+        debugPrint("Token eliminado")
     }
 }

@@ -93,7 +93,9 @@ final class LoginViewController: UIViewController {
         loginButton.tapPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.handleLogin()
+                Task {
+                    await self?.handleLogin()
+                }
             }
             .store(in: &subscriptions)
     }
@@ -147,7 +149,7 @@ final class LoginViewController: UIViewController {
     }
     
     // MARK: - Actions
-    private func handleLogin() {
-        vm.login(user: user, password: password)
+    private func handleLogin() async {
+        await vm.login(user: user, password: password)
     }
 }
