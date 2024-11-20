@@ -1,10 +1,3 @@
-//
-//  LoginViewModel.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 15/11/24.
-//
-
 import Combine
 import Foundation
 
@@ -18,12 +11,11 @@ enum State {
 final class LoginViewModel: ObservableObject {
     
     // MARK: - Published Properties
-    @Published var status: String = ""
-    @Published var isLogged: Bool = false
-    @Published var state: State = .loading // Estado inicial
+    @Published var state: State = .loading
+    @Published var toastMessage: (message: String, isError: Bool)?
     
     // MARK: - Private Properties
-    private var authService = AuthService()
+    private var authService: AuthService
     
     // MARK: - Initializer
     init(authService: AuthService = AuthService()) {
@@ -33,8 +25,9 @@ final class LoginViewModel: ObservableObject {
     
     // MARK: - Public Methods
     func login(user: String, password: String) async {
-        status = "Haciendo login..."
-        state = .loading // Cambiar al estado de carga
+        // Limpiamos cualquier mensaje previo
+        toastMessage = nil
+        state = .loading
         
         do {
             try await authService.login(user: user, password: password)
@@ -48,8 +41,9 @@ final class LoginViewModel: ObservableObject {
     private func checkToken() {
         if let token = TokenManager.shared.loadToken(), !token.isEmpty {
             print("Token válido encontrado: \(token)")
+            toastMessage = (message: "Bienvenido de nuevo", isError: false) // Mostrar toast de éxito
             Task {
-                try? await Task.sleep(nanoseconds: 2_000_000_000) // Simulación de espera
+                try? await Task.sleep(nanoseconds: 1_000_000_000) // Breve espera para mostrar el toast
                 state = .navigateToHeroes
             }
         } else {
@@ -59,26 +53,33 @@ final class LoginViewModel: ObservableObject {
     }
     
     private func handleLoginSuccess() {
-        isLogged = true
-        status = "" // Limpia mensajes de error
-        state = .navigateToHeroes
+        // Publicamos el mensaje de éxito
+        toastMessage = (message: "Login exitoso", isError: false)
+        // Esperamos un breve momento para mostrar el Toast antes de navegar
+        Task {
+            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 segundo
+            state = .navigateToHeroes
+        }
     }
     
     private func handleLoginError(_ error: Error) {
+        let errorMessage: String
         if let authError = error as? AuthenticationError {
-            status = authError.localizedDescription
+            errorMessage = authError.localizedDescription
         } else if let urlError = error as? URLError {
             switch urlError.code {
             case .notConnectedToInternet:
-                status = "No hay conexión a internet. Por favor, verifica tu red."
+                errorMessage = "No hay conexión a internet. Por favor, verifica tu red."
             case .timedOut:
-                status = "La solicitud ha tardado demasiado. Inténtalo más tarde."
+                errorMessage = "La solicitud ha tardado demasiado. Inténtalo más tarde."
             default:
-                status = "Ha ocurrido un error. Intenta nuevamente."
+                errorMessage = "Ha ocurrido un error. Intenta nuevamente."
             }
         } else {
-            status = "Ha ocurrido un error desconocido."
+            errorMessage = "Ha ocurrido un error desconocido."
         }
+        // Publicamos el mensaje de error
+        toastMessage = (message: errorMessage, isError: true)
         state = .showLogin
     }
 }

@@ -70,7 +70,7 @@ class DetailsViewController: UIViewController {
             .store(in: &subscriptions)
     }
     
-    private func updateCollectionViewVisibility(hasTransformations: Bool) {
+    func updateCollectionViewVisibility(hasTransformations: Bool) {
         if hasTransformations {
             transformationsCollectionView.isHidden = false
             collectionViewHeightConstraint.constant = 250 // Altura deseada del CollectionView

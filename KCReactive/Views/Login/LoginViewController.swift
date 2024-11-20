@@ -15,12 +15,12 @@ final class LoginViewController: UIViewController {
     @IBOutlet weak var userTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var stackViewConstraintY: NSLayoutConstraint!
     
     // MARK: - Properties
-    private var password: String = ""
     private var user: String = ""
+    private var password: String = ""
     private let vm = LoginViewModel()
     private var subscriptions = Set<AnyCancellable>()
     
@@ -29,6 +29,11 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         bindViewModel()
+        registerKeyboardNotifications()
+    }
+    
+    deinit {
+        unregisterKeyboardNotifications()
     }
     
     // MARK: - Setup Methods
@@ -38,8 +43,6 @@ final class LoginViewController: UIViewController {
     }
     
     private func setupInitialUIState() {
-        errorLabel.text = ""
-        errorLabel.isHidden = true
         loginButton.isHidden = true
         userTextField.isHidden = true
         passwordTextField.isHidden = true
@@ -67,7 +70,7 @@ final class LoginViewController: UIViewController {
     // MARK: - ViewModel Binding
     private func bindViewModel() {
         bindState()
-        bindStatus()
+        bindToastMessage()
         observeLoginButtonTap()
     }
     
@@ -80,11 +83,12 @@ final class LoginViewController: UIViewController {
             .store(in: &subscriptions)
     }
     
-    private func bindStatus() {
-        vm.$status
+    private func bindToastMessage() {
+        vm.$toastMessage
+            .compactMap { $0 } // Ignorar valores nulos
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] statusString in
-                self?.updateErrorLabel(with: statusString)
+            .sink { [weak self] toastMessage in
+                self?.showToast(message: toastMessage.message, isError: toastMessage.isError)
             }
             .store(in: &subscriptions)
     }
@@ -117,7 +121,6 @@ final class LoginViewController: UIViewController {
         userTextField.isHidden = true
         passwordTextField.isHidden = true
         loginButton.isHidden = true
-        errorLabel.isHidden = true
     }
     
     private func showLoginUI() {
@@ -127,13 +130,15 @@ final class LoginViewController: UIViewController {
         loginButton.isHidden = false
     }
     
-    private func updateLoginButtonState() {
-        loginButton.isEnabled = !user.isEmpty && !password.isEmpty
+    private func showToast(message: String, isError: Bool) {
+        let toast = ToastView()
+        let backgroundColor: UIColor = isError ? .darkRed : .darkGreen
+        toast.configure(message: message, backgroundColor: backgroundColor)
+        toast.show(in: view)
     }
     
-    private func updateErrorLabel(with message: String) {
-        errorLabel.text = message
-        errorLabel.isHidden = message.isEmpty
+    private func updateLoginButtonState() {
+        loginButton.isEnabled = !user.isEmpty && !password.isEmpty
     }
     
     private func navigateToHeroes() {
@@ -146,6 +151,51 @@ final class LoginViewController: UIViewController {
         
         // Reemplazar la pila de vistas para evitar el botón "Back"
         navigationController.setViewControllers([herosVC], animated: true)
+    }
+    
+    private func registerKeyboardNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+
+    private func unregisterKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        
+        // Ajustar el desplazamiento
+        let keyboardHeight = keyboardFrame.height
+        stackViewConstraintY.constant = -keyboardHeight / 3 // Mueve el stackView hacia arriba (ajusta el divisor según necesidad)
+
+        // Animación para hacer el cambio suave
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    @objc private func keyboardWillHide(notification: Notification) {
+        // Restaurar la posición original del stackView
+        stackViewConstraintY.constant = 0
+        
+        // Animación para hacer el cambio suave
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     // MARK: - Actions
