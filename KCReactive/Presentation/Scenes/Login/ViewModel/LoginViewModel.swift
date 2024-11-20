@@ -15,11 +15,11 @@ final class LoginViewModel: ObservableObject {
     @Published var toastMessage: (message: String, isError: Bool)?
     
     // MARK: - Private Properties
-    private var authService: AuthService
+    private var loginUseCase: LoginUseCaseProtocol
     
     // MARK: - Initializer
-    init(authService: AuthService = AuthService()) {
-        self.authService = authService
+    init(loginUseCase: LoginUseCaseProtocol = LoginUseCase()) {
+        self.loginUseCase = loginUseCase
         checkToken()
     }
     
@@ -30,8 +30,15 @@ final class LoginViewModel: ObservableObject {
         state = .loading
         
         do {
-            try await authService.login(user: user, password: password)
-            handleLoginSuccess()
+            // Utilizamos el caso de uso para realizar el login
+            let success = try await loginUseCase.loginApp(user: user, password: password)
+            
+            if success {
+                handleLoginSuccess()
+            } else {
+                // Manejo de caso inesperado (éxito no retornado)
+                handleLoginError(AuthenticationError.invalidCredentials)
+            }
         } catch {
             handleLoginError(error)
         }

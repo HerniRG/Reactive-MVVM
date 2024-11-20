@@ -15,16 +15,13 @@
 		66813AED2CEE31EA00D1FACE /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66813ADC2CEE31EA00D1FACE /* LoginViewController.xib */; };
 		66813AEE2CEE31EA00D1FACE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66813AE02CEE31EA00D1FACE /* Assets.xcassets */; };
 		66813AF02CEE31EA00D1FACE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66813AE32CEE31EA00D1FACE /* LaunchScreen.storyboard */; };
-		66813AF12CEE31EA00D1FACE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66813AE52CEE31EA00D1FACE /* Main.storyboard */; };
 		66813AF22CEE31EA00D1FACE /* AuthenticationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ABB2CEE31EA00D1FACE /* AuthenticationError.swift */; };
-		66813AF32CEE31EA00D1FACE /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ABC2CEE31EA00D1FACE /* AuthService.swift */; };
+		66813AF32CEE31EA00D1FACE /* NetworkLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ABC2CEE31EA00D1FACE /* NetworkLogin.swift */; };
 		66813AF42CEE31EA00D1FACE /* BaseNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ABD2CEE31EA00D1FACE /* BaseNetwork.swift */; };
 		66813AF52CEE31EA00D1FACE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ABE2CEE31EA00D1FACE /* Endpoints.swift */; };
-		66813AF62CEE31EA00D1FACE /* HeroService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ABF2CEE31EA00D1FACE /* HeroService.swift */; };
 		66813AF72CEE31EA00D1FACE /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AC22CEE31EA00D1FACE /* Hero.swift */; };
 		66813AF82CEE31EA00D1FACE /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AC32CEE31EA00D1FACE /* KeyChain.swift */; };
 		66813AF92CEE31EA00D1FACE /* Transformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AC42CEE31EA00D1FACE /* Transformation.swift */; };
-		66813AFA2CEE31EA00D1FACE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AC72CEE31EA00D1FACE /* Constants.swift */; };
 		66813AFB2CEE31EA00D1FACE /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AC82CEE31EA00D1FACE /* ToastView.swift */; };
 		66813AFC2CEE31EA00D1FACE /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AC92CEE31EA00D1FACE /* UIImage+Extensions.swift */; };
 		66813AFD2CEE31EA00D1FACE /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ACB2CEE31EA00D1FACE /* DetailsViewModel.swift */; };
@@ -37,7 +34,29 @@
 		66813B042CEE31EA00D1FACE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ADB2CEE31EA00D1FACE /* LoginViewController.swift */; };
 		66813B052CEE31EA00D1FACE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ADF2CEE31EA00D1FACE /* AppDelegate.swift */; };
 		66813B062CEE31EA00D1FACE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AE62CEE31EA00D1FACE /* SceneDelegate.swift */; };
-		66813B072CEE31EA00D1FACE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AE72CEE31EA00D1FACE /* ViewController.swift */; };
+		66813B1E2CEE411000D1FACE /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B1D2CEE410200D1FACE /* LoginUseCase.swift */; };
+		66813B222CEE416600D1FACE /* LoginRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B212CEE415D00D1FACE /* LoginRepositoryProtocol.swift */; };
+		66813B242CEE41AC00D1FACE /* LoginUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B232CEE41A500D1FACE /* LoginUseCaseProtocol.swift */; };
+		66813B282CEE42A500D1FACE /* HTTPResponseCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B272CEE429600D1FACE /* HTTPResponseCodes.swift */; };
+		66813B2A2CEE43EB00D1FACE /* HTTPMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B292CEE43EB00D1FACE /* HTTPMethods.swift */; };
+		66813B2C2CEE470D00D1FACE /* ConstantsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B2B2CEE470300D1FACE /* ConstantsApp.swift */; };
+		66813B2E2CEE4BB100D1FACE /* NetworkHeroe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B2D2CEE4BAB00D1FACE /* NetworkHeroe.swift */; };
+		66813B312CEE4E9800D1FACE /* NetworkLoginFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B302CEE4E8500D1FACE /* NetworkLoginFake.swift */; };
+		66813B332CEE4EEA00D1FACE /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B322CEE4EE000D1FACE /* LoginRepository.swift */; };
+		66813B352CEE525100D1FACE /* LoginRepositoryFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B342CEE524300D1FACE /* LoginRepositoryFake.swift */; };
+		66813B372CEE5C3600D1FACE /* NetworkTransformaciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B362CEE5C2C00D1FACE /* NetworkTransformaciones.swift */; };
+		66813B392CEE5D3C00D1FACE /* HeroRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B382CEE5D3300D1FACE /* HeroRepository.swift */; };
+		66813B3B2CEE5D5600D1FACE /* TransformationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B3A2CEE5D4A00D1FACE /* TransformationRepository.swift */; };
+		66813B3D2CEE5EF300D1FACE /* HeroUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B3C2CEE5EF300D1FACE /* HeroUseCaseProtocol.swift */; };
+		66813B3F2CEE5F0800D1FACE /* HeroRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B3E2CEE5F0800D1FACE /* HeroRepositoryProtocol.swift */; };
+		66813B412CEE5F8D00D1FACE /* TransformationRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B402CEE5F8D00D1FACE /* TransformationRepositoryProtocol.swift */; };
+		66813B432CEE5F9B00D1FACE /* TransformationUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B422CEE5F9A00D1FACE /* TransformationUseCaseProtocol.swift */; };
+		66813B452CEE600700D1FACE /* HeroUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B442CEE600700D1FACE /* HeroUseCase.swift */; };
+		66813B472CEE603100D1FACE /* TransformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B462CEE603100D1FACE /* TransformationUseCase.swift */; };
+		66813B492CEE638900D1FACE /* HeroRepositoryFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B482CEE638900D1FACE /* HeroRepositoryFake.swift */; };
+		66813B4B2CEE639E00D1FACE /* TransformationRepositoryFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B4A2CEE639E00D1FACE /* TransformationRepositoryFake.swift */; };
+		66813B4D2CEE649800D1FACE /* HeroServiceFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B4C2CEE649800D1FACE /* HeroServiceFake.swift */; };
+		66813B4F2CEE64C800D1FACE /* TransformationServiceFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B4E2CEE64C800D1FACE /* TransformationServiceFake.swift */; };
 		66D1D4352CE67AFE00F546B2 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 66D1D4342CE67AFE00F546B2 /* KeychainSwift */; };
 /* End PBXBuildFile section */
 
@@ -60,14 +79,12 @@
 
 /* Begin PBXFileReference section */
 		66813ABB2CEE31EA00D1FACE /* AuthenticationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationError.swift; sourceTree = "<group>"; };
-		66813ABC2CEE31EA00D1FACE /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		66813ABC2CEE31EA00D1FACE /* NetworkLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogin.swift; sourceTree = "<group>"; };
 		66813ABD2CEE31EA00D1FACE /* BaseNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNetwork.swift; sourceTree = "<group>"; };
 		66813ABE2CEE31EA00D1FACE /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
-		66813ABF2CEE31EA00D1FACE /* HeroService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroService.swift; sourceTree = "<group>"; };
 		66813AC22CEE31EA00D1FACE /* Hero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 		66813AC32CEE31EA00D1FACE /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		66813AC42CEE31EA00D1FACE /* Transformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformation.swift; sourceTree = "<group>"; };
-		66813AC72CEE31EA00D1FACE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		66813AC82CEE31EA00D1FACE /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		66813AC92CEE31EA00D1FACE /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		66813ACB2CEE31EA00D1FACE /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
@@ -87,9 +104,30 @@
 		66813AE02CEE31EA00D1FACE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66813AE12CEE31EA00D1FACE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66813AE22CEE31EA00D1FACE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		66813AE42CEE31EA00D1FACE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		66813AE62CEE31EA00D1FACE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		66813AE72CEE31EA00D1FACE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		66813B1D2CEE410200D1FACE /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
+		66813B212CEE415D00D1FACE /* LoginRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepositoryProtocol.swift; sourceTree = "<group>"; };
+		66813B232CEE41A500D1FACE /* LoginUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCaseProtocol.swift; sourceTree = "<group>"; };
+		66813B272CEE429600D1FACE /* HTTPResponseCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponseCodes.swift; sourceTree = "<group>"; };
+		66813B292CEE43EB00D1FACE /* HTTPMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethods.swift; sourceTree = "<group>"; };
+		66813B2B2CEE470300D1FACE /* ConstantsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsApp.swift; sourceTree = "<group>"; };
+		66813B2D2CEE4BAB00D1FACE /* NetworkHeroe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHeroe.swift; sourceTree = "<group>"; };
+		66813B302CEE4E8500D1FACE /* NetworkLoginFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoginFake.swift; sourceTree = "<group>"; };
+		66813B322CEE4EE000D1FACE /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
+		66813B342CEE524300D1FACE /* LoginRepositoryFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepositoryFake.swift; sourceTree = "<group>"; };
+		66813B362CEE5C2C00D1FACE /* NetworkTransformaciones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTransformaciones.swift; sourceTree = "<group>"; };
+		66813B382CEE5D3300D1FACE /* HeroRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroRepository.swift; sourceTree = "<group>"; };
+		66813B3A2CEE5D4A00D1FACE /* TransformationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationRepository.swift; sourceTree = "<group>"; };
+		66813B3C2CEE5EF300D1FACE /* HeroUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroUseCaseProtocol.swift; sourceTree = "<group>"; };
+		66813B3E2CEE5F0800D1FACE /* HeroRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroRepositoryProtocol.swift; sourceTree = "<group>"; };
+		66813B402CEE5F8D00D1FACE /* TransformationRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationRepositoryProtocol.swift; sourceTree = "<group>"; };
+		66813B422CEE5F9A00D1FACE /* TransformationUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationUseCaseProtocol.swift; sourceTree = "<group>"; };
+		66813B442CEE600700D1FACE /* HeroUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroUseCase.swift; sourceTree = "<group>"; };
+		66813B462CEE603100D1FACE /* TransformationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationUseCase.swift; sourceTree = "<group>"; };
+		66813B482CEE638900D1FACE /* HeroRepositoryFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroRepositoryFake.swift; sourceTree = "<group>"; };
+		66813B4A2CEE639E00D1FACE /* TransformationRepositoryFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationRepositoryFake.swift; sourceTree = "<group>"; };
+		66813B4C2CEE649800D1FACE /* HeroServiceFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroServiceFake.swift; sourceTree = "<group>"; };
+		66813B4E2CEE64C800D1FACE /* TransformationServiceFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationServiceFake.swift; sourceTree = "<group>"; };
 		66D1D3F72CE678E200F546B2 /* KCReactive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KCReactive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D1D40D2CE678E400F546B2 /* KCReactiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCReactiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D1D4172CE678E400F546B2 /* KCReactiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCReactiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,25 +173,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		66813AC02CEE31EA00D1FACE /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				66813ABB2CEE31EA00D1FACE /* AuthenticationError.swift */,
-				66813ABC2CEE31EA00D1FACE /* AuthService.swift */,
-				66813ABD2CEE31EA00D1FACE /* BaseNetwork.swift */,
-				66813ABE2CEE31EA00D1FACE /* Endpoints.swift */,
-				66813ABF2CEE31EA00D1FACE /* HeroService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		66813AC12CEE31EA00D1FACE /* Data */ = {
 			isa = PBXGroup;
 			children = (
 				66813B0C2CEE35F800D1FACE /* Repositories */,
 				66813B0B2CEE35EB00D1FACE /* Network */,
 				66813B0A2CEE35D100D1FACE /* Local */,
-				66813AC02CEE31EA00D1FACE /* Services */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -175,17 +200,8 @@
 				66813B0F2CEE378A00D1FACE /* UseCases */,
 				66813AC52CEE31EA00D1FACE /* Entities */,
 				66813B112CEE37D300D1FACE /* Extensions */,
-				66813ACA2CEE31EA00D1FACE /* Tools */,
 			);
 			path = Domain;
-			sourceTree = "<group>";
-		};
-		66813ACA2CEE31EA00D1FACE /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-				66813AC72CEE31EA00D1FACE /* Constants.swift */,
-			);
-			path = Tools;
 			sourceTree = "<group>";
 		};
 		66813AD12CEE31EA00D1FACE /* CollectionViewCell */ = {
@@ -209,6 +225,7 @@
 		66813AE82CEE31EA00D1FACE /* KCReactive */ = {
 			isa = PBXGroup;
 			children = (
+				66813B2F2CEE4E3100D1FACE /* Preview Content */,
 				66813B092CEE329700D1FACE /* Common */,
 				66813B082CEE320E00D1FACE /* Presentation */,
 				66813AC62CEE31EA00D1FACE /* Domain */,
@@ -217,9 +234,7 @@
 				66813AE02CEE31EA00D1FACE /* Assets.xcassets */,
 				66813AE12CEE31EA00D1FACE /* Info.plist */,
 				66813AE32CEE31EA00D1FACE /* LaunchScreen.storyboard */,
-				66813AE52CEE31EA00D1FACE /* Main.storyboard */,
 				66813AE62CEE31EA00D1FACE /* SceneDelegate.swift */,
-				66813AE72CEE31EA00D1FACE /* ViewController.swift */,
 			);
 			path = KCReactive;
 			sourceTree = "<group>";
@@ -243,6 +258,7 @@
 		66813B0A2CEE35D100D1FACE /* Local */ = {
 			isa = PBXGroup;
 			children = (
+				66813B2B2CEE470300D1FACE /* ConstantsApp.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -258,6 +274,9 @@
 		66813B0C2CEE35F800D1FACE /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				66813B3A2CEE5D4A00D1FACE /* TransformationRepository.swift */,
+				66813B382CEE5D3300D1FACE /* HeroRepository.swift */,
+				66813B322CEE4EE000D1FACE /* LoginRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -265,6 +284,14 @@
 		66813B0D2CEE360C00D1FACE /* BaseNetwork */ = {
 			isa = PBXGroup;
 			children = (
+				66813ABD2CEE31EA00D1FACE /* BaseNetwork.swift */,
+				66813B292CEE43EB00D1FACE /* HTTPMethods.swift */,
+				66813B272CEE429600D1FACE /* HTTPResponseCodes.swift */,
+				66813ABB2CEE31EA00D1FACE /* AuthenticationError.swift */,
+				66813ABE2CEE31EA00D1FACE /* Endpoints.swift */,
+				66813ABC2CEE31EA00D1FACE /* NetworkLogin.swift */,
+				66813B2D2CEE4BAB00D1FACE /* NetworkHeroe.swift */,
+				66813B362CEE5C2C00D1FACE /* NetworkTransformaciones.swift */,
 			);
 			path = BaseNetwork;
 			sourceTree = "<group>";
@@ -272,6 +299,12 @@
 		66813B0E2CEE374500D1FACE /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				66813B402CEE5F8D00D1FACE /* TransformationRepositoryProtocol.swift */,
+				66813B422CEE5F9A00D1FACE /* TransformationUseCaseProtocol.swift */,
+				66813B3E2CEE5F0800D1FACE /* HeroRepositoryProtocol.swift */,
+				66813B3C2CEE5EF300D1FACE /* HeroUseCaseProtocol.swift */,
+				66813B212CEE415D00D1FACE /* LoginRepositoryProtocol.swift */,
+				66813B232CEE41A500D1FACE /* LoginUseCaseProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -279,6 +312,9 @@
 		66813B0F2CEE378A00D1FACE /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				66813B462CEE603100D1FACE /* TransformationUseCase.swift */,
+				66813B442CEE600700D1FACE /* HeroUseCase.swift */,
+				66813B1D2CEE410200D1FACE /* LoginUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -387,6 +423,19 @@
 				66813AC92CEE31EA00D1FACE /* UIImage+Extensions.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		66813B2F2CEE4E3100D1FACE /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				66813B342CEE524300D1FACE /* LoginRepositoryFake.swift */,
+				66813B482CEE638900D1FACE /* HeroRepositoryFake.swift */,
+				66813B4A2CEE639E00D1FACE /* TransformationRepositoryFake.swift */,
+				66813B302CEE4E8500D1FACE /* NetworkLoginFake.swift */,
+				66813B4C2CEE649800D1FACE /* HeroServiceFake.swift */,
+				66813B4E2CEE64C800D1FACE /* TransformationServiceFake.swift */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		66D1D3EE2CE678E200F546B2 = {
@@ -539,7 +588,6 @@
 				66813AED2CEE31EA00D1FACE /* LoginViewController.xib in Resources */,
 				66813AEE2CEE31EA00D1FACE /* Assets.xcassets in Resources */,
 				66813AF02CEE31EA00D1FACE /* LaunchScreen.storyboard in Resources */,
-				66813AF12CEE31EA00D1FACE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,27 +613,47 @@
 			buildActionMask = 2147483647;
 			files = (
 				66813AF22CEE31EA00D1FACE /* AuthenticationError.swift in Sources */,
-				66813AF32CEE31EA00D1FACE /* AuthService.swift in Sources */,
+				66813AF32CEE31EA00D1FACE /* NetworkLogin.swift in Sources */,
+				66813B2E2CEE4BB100D1FACE /* NetworkHeroe.swift in Sources */,
 				66813AF42CEE31EA00D1FACE /* BaseNetwork.swift in Sources */,
+				66813B1E2CEE411000D1FACE /* LoginUseCase.swift in Sources */,
+				66813B3D2CEE5EF300D1FACE /* HeroUseCaseProtocol.swift in Sources */,
+				66813B412CEE5F8D00D1FACE /* TransformationRepositoryProtocol.swift in Sources */,
 				66813AF52CEE31EA00D1FACE /* Endpoints.swift in Sources */,
-				66813AF62CEE31EA00D1FACE /* HeroService.swift in Sources */,
+				66813B2A2CEE43EB00D1FACE /* HTTPMethods.swift in Sources */,
 				66813AF72CEE31EA00D1FACE /* Hero.swift in Sources */,
 				66813AF82CEE31EA00D1FACE /* KeyChain.swift in Sources */,
+				66813B4B2CEE639E00D1FACE /* TransformationRepositoryFake.swift in Sources */,
+				66813B332CEE4EEA00D1FACE /* LoginRepository.swift in Sources */,
 				66813AF92CEE31EA00D1FACE /* Transformation.swift in Sources */,
-				66813AFA2CEE31EA00D1FACE /* Constants.swift in Sources */,
+				66813B2C2CEE470D00D1FACE /* ConstantsApp.swift in Sources */,
+				66813B4F2CEE64C800D1FACE /* TransformationServiceFake.swift in Sources */,
 				66813AFB2CEE31EA00D1FACE /* ToastView.swift in Sources */,
+				66813B492CEE638900D1FACE /* HeroRepositoryFake.swift in Sources */,
+				66813B352CEE525100D1FACE /* LoginRepositoryFake.swift in Sources */,
+				66813B452CEE600700D1FACE /* HeroUseCase.swift in Sources */,
 				66813AFC2CEE31EA00D1FACE /* UIImage+Extensions.swift in Sources */,
+				66813B3F2CEE5F0800D1FACE /* HeroRepositoryProtocol.swift in Sources */,
 				66813AFD2CEE31EA00D1FACE /* DetailsViewModel.swift in Sources */,
 				66813AFE2CEE31EA00D1FACE /* HeroesViewModel.swift in Sources */,
+				66813B4D2CEE649800D1FACE /* HeroServiceFake.swift in Sources */,
 				66813AFF2CEE31EA00D1FACE /* LoginViewModel.swift in Sources */,
 				66813B002CEE31EA00D1FACE /* TransformationCollectionViewCell.swift in Sources */,
+				66813B432CEE5F9B00D1FACE /* TransformationUseCaseProtocol.swift in Sources */,
 				66813B012CEE31EA00D1FACE /* DetailsViewController.swift in Sources */,
+				66813B3B2CEE5D5600D1FACE /* TransformationRepository.swift in Sources */,
+				66813B282CEE42A500D1FACE /* HTTPResponseCodes.swift in Sources */,
+				66813B242CEE41AC00D1FACE /* LoginUseCaseProtocol.swift in Sources */,
 				66813B022CEE31EA00D1FACE /* HeroTableViewCell.swift in Sources */,
 				66813B032CEE31EA00D1FACE /* HeroTableViewController.swift in Sources */,
 				66813B042CEE31EA00D1FACE /* LoginViewController.swift in Sources */,
 				66813B052CEE31EA00D1FACE /* AppDelegate.swift in Sources */,
+				66813B472CEE603100D1FACE /* TransformationUseCase.swift in Sources */,
 				66813B062CEE31EA00D1FACE /* SceneDelegate.swift in Sources */,
-				66813B072CEE31EA00D1FACE /* ViewController.swift in Sources */,
+				66813B372CEE5C3600D1FACE /* NetworkTransformaciones.swift in Sources */,
+				66813B392CEE5D3C00D1FACE /* HeroRepository.swift in Sources */,
+				66813B222CEE416600D1FACE /* LoginRepositoryProtocol.swift in Sources */,
+				66813B312CEE4E9800D1FACE /* NetworkLoginFake.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,14 +695,6 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		66813AE52CEE31EA00D1FACE /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				66813AE42CEE31EA00D1FACE /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -645,13 +705,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "KCReactive/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9M98K8Y584;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCReactive/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Dragon Ball";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -678,13 +738,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "KCReactive/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9M98K8Y584;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCReactive/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Dragon Ball";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (

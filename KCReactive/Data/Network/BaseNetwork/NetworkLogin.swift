@@ -1,15 +1,18 @@
+// AuthService.swift
+// KCReactive
 //
-//  AuthService.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 18/11/24.
+// Creado por Hernán Rodríguez el 18/11/24.
 //
 
 import Foundation
 
-struct AuthService {
-    func login(user: String, password: String) async throws {
-        let urlString = "\(server)\(Endpoints.login.rawValue)"
+protocol NetworkLoginProtocol {
+    func loginApp(user: String, password: String) async throws -> String
+}
+
+final class NetworkLogin: NetworkLoginProtocol {
+    func loginApp(user: String, password: String) async throws -> String {
+        let urlString = "\(ConstantsApp.CONST_SERVER_URL)\(Endpoints.login.rawValue)"
         let credentials = "\(user):\(password)"
         guard let encodedCredentials = credentials.data(using: .utf8)?.base64EncodedString() else {
             throw URLError(.badURL)
@@ -31,23 +34,23 @@ struct AuthService {
             }
             
             switch httpResponse.statusCode {
-            case 200:
+            case HTTPResponseCodes.success:
                 // Token decodificado correctamente
                 guard let token = String(data: data, encoding: .utf8), !token.isEmpty else {
                     throw URLError(.cannotDecodeContentData)
                 }
-                TokenManager.shared.saveToken(token)
-            case 401:
+                return token
+            case HTTPResponseCodes.unauthorized:
                 throw AuthenticationError.invalidCredentials
-            case 403:
+            case HTTPResponseCodes.forbidden:
                 throw AuthenticationError.accessDenied
-            case 500...599:
+            case HTTPResponseCodes.serverErrorRange:
                 throw AuthenticationError.serverError(statusCode: httpResponse.statusCode)
             default:
                 throw URLError(.badServerResponse)
             }
         } catch {
-            throw error // Propagar cualquier error encontrado
+            throw error
         }
     }
 }

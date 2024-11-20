@@ -53,18 +53,12 @@ class DetailsViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        // Observar cambios en `hasTransformations`
-        vm.$hasTransformations
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasTransformations in
-                self?.updateCollectionViewVisibility(hasTransformations: hasTransformations)
-            }
-            .store(in: &subscriptions)
-        
-        // Observar cambios en `transformations` para recargar el CollectionView
+        // Observar cambios en `transformations`
         vm.$transformations
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
+            .sink { [weak self] transformations in
+                let hasTransformations = transformations != nil
+                self?.updateCollectionViewVisibility(hasTransformations: hasTransformations)
                 self?.transformationsCollectionView.reloadData()
             }
             .store(in: &subscriptions)

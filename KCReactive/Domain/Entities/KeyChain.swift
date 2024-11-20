@@ -10,7 +10,7 @@ import KeychainSwift
 
 final class TokenManager {
     private let keychain = KeychainSwift()
-    private let tokenKey = "SESSION_TOKEN"
+    private let tokenKey = ConstantsApp.CONST_TOKEN_KEY
     
     static let shared = TokenManager()
     

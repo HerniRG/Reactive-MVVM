@@ -2,13 +2,13 @@ import UIKit
 import Combine
 
 class HeroTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var errorLabel: UILabel!
     
     private var vm = HeroesViewModel()
     private var cancellables = Set<AnyCancellable>()
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,7 +16,7 @@ class HeroTableViewController: UIViewController, UITableViewDataSource, UITableV
         setupTableView()
         configUI()
     }
-
+    
     private func setupNavigationBar() {
         // Configuración del título
         self.title = "Héroes"
@@ -31,24 +31,24 @@ class HeroTableViewController: UIViewController, UITableViewDataSource, UITableV
         logoutButton.tintColor = .red
         navigationItem.rightBarButtonItem = logoutButton
     }
-
+    
     @objc private func logoutTapped() {
         // Borrar el token y volver al login
         vm.logout()
         navigateToLogin()
     }
-
+    
     private func navigateToLogin() {
         // Descartar el controlador actual y volver al login
         self.navigationController?.setViewControllers([LoginViewController()], animated: true)
     }
-
+    
     private func setupTableView() {
         tableView.register(UINib(nibName: "HeroTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         tableView.dataSource = self
         tableView.delegate = self
     }
-
+    
     private func configUI() {
         // Observar cambios en `heroes`
         vm.$heroes
@@ -62,32 +62,37 @@ class HeroTableViewController: UIViewController, UITableViewDataSource, UITableV
         vm.$isLoading
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isLoading in
-                if isLoading {
-                    self?.loadingIndicator.startAnimating()
-                    self?.tableView.isHidden = true
-                } else {
-                    self?.loadingIndicator.stopAnimating()
-                    self?.tableView.isHidden = false
-                }
+                self?.loadingIndicator.isHidden = !isLoading
+                self?.tableView.isHidden = isLoading
+                self?.errorLabel.isHidden = true // Ocultar mensaje de error durante la carga
+            }
+            .store(in: &cancellables)
+        
+        // Observar cambios en `showError`
+        vm.$showError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] showError in
+                self?.errorLabel.isHidden = !showError
+                self?.errorLabel.text = "No se han cargado los héroes correctamente."
+                self?.tableView.isHidden = showError
             }
             .store(in: &cancellables)
     }
-
+    
     // MARK: - Table view data source
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return vm.heroes.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! HeroTableViewCell
         
         let hero = vm.heroes[indexPath.row]
-        
         cell.title.text = hero.name
         if let url = URL(string: hero.photo) {
             cell.photo.loadImageRemote(url: url)
@@ -95,7 +100,7 @@ class HeroTableViewController: UIViewController, UITableViewDataSource, UITableV
         
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 160
     }

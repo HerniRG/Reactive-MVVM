@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HeroTableViewController" customModule="KCReactive" customModuleProvider="target">
             <connections>
+                <outlet property="errorLabel" destination="7Xi-i3-xrK" id="f1f-cI-ffa"/>
                 <outlet property="loadingIndicator" destination="7Di-nO-qJR" id="Qii-lM-fRt"/>
                 <outlet property="tableView" destination="GXF-oz-qFm" id="Tc0-BJ-pn3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -20,6 +21,12 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Xi-i3-xrK">
+                    <rect key="frame" x="30" y="416" width="333" height="20.333333333333314"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="GXF-oz-qFm">
                     <rect key="frame" x="0.0" y="59" width="393" height="793"/>
                     <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -35,8 +42,12 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="GXF-oz-qFm" secondAttribute="bottom" id="0Gg-dc-5ru"/>
                 <constraint firstItem="GXF-oz-qFm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="2yu-bj-Vy6"/>
+                <constraint firstItem="7Xi-i3-xrK" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Db0-vm-GTe"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="GXF-oz-qFm" secondAttribute="trailing" id="ScF-VG-cY0"/>
+                <constraint firstItem="7Xi-i3-xrK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="Vvh-Eo-fwJ"/>
                 <constraint firstItem="GXF-oz-qFm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="XZd-mk-oCs"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7Xi-i3-xrK" secondAttribute="trailing" constant="30" id="fAs-Zi-Yl6"/>
+                <constraint firstItem="7Xi-i3-xrK" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="yIj-z9-ZMt"/>
             </constraints>
             <point key="canvasLocation" x="132" y="-11"/>
         </view>

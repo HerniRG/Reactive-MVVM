@@ -12,29 +12,27 @@ import Foundation
 final class DetailsViewModel: ObservableObject {
     var heroe: Hero
     @Published var transformations: [Transformation]? = nil
-    @Published var hasTransformations : Bool = false
     
-    private var heroService = HeroService()
+    private var transformationUseCase: TransformationUseCaseProtocol
     
-    init(heroe: Hero, heroService: HeroService = HeroService()) {
+    init(
+        heroe: Hero,
+        transformationUseCase: TransformationUseCaseProtocol = TransformationUseCase()
+    ) {
         self.heroe = heroe
-        self.heroService = heroService
+        self.transformationUseCase = transformationUseCase
         Task {
             await loadTransformations()
         }
     }
     
-    // MARK: - Methods
     func loadTransformations() async {
         do {
-            // Llamar al servicio para obtener transformaciones
-            let fetchedTransformations = try await heroService.getTransformations(id: heroe.id.uuidString)
-            self.transformations = processTransformations(fetchedTransformations)
-            self.hasTransformations = !fetchedTransformations.isEmpty
-            print(fetchedTransformations)
-            print(self.hasTransformations)
+            let fetchedTransformations = try await transformationUseCase.getTransformations(id: heroe.id.uuidString)
+            let processedTransformations = processTransformations(fetchedTransformations)
+            self.transformations = processedTransformations.isEmpty ? nil : processedTransformations
         } catch {
-            self.hasTransformations = false
+            self.transformations = nil
         }
     }
     
