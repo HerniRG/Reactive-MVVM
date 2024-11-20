@@ -17,16 +17,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title" translatesAutoresizingMaskIntoConstraints="NO" id="FRE-49-x3V">
-                                <rect key="frame" x="30" y="358" width="333" height="136"/>
+                                <rect key="frame" x="40" y="358" width="313" height="136"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemIndigoColor"/>
                         <constraints>
                             <constraint firstItem="FRE-49-x3V" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="3bT-je-7OE"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FRE-49-x3V" secondAttribute="trailing" constant="30" id="7X0-vL-2wr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FRE-49-x3V" secondAttribute="trailing" constant="40" id="7X0-vL-2wr"/>
                             <constraint firstItem="FRE-49-x3V" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="WFO-GD-aXO"/>
-                            <constraint firstItem="FRE-49-x3V" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="lPu-Qi-VWy"/>
+                            <constraint firstItem="FRE-49-x3V" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="lPu-Qi-VWy"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -38,7 +38,7 @@
     <resources>
         <image name="title" width="787" height="136"/>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
