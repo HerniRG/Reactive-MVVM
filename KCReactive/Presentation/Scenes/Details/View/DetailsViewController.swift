@@ -15,10 +15,10 @@ class DetailsViewController: UIViewController {
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Outlets
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var transformationsCollectionView: UICollectionView!
-    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var transformationsCollectionView: UICollectionView!
+    @IBOutlet private weak var collectionViewHeightConstraint: NSLayoutConstraint!
     
     // MARK: - Initializer
     init(viewModel: DetailsViewModel) {
@@ -29,66 +29,115 @@ class DetailsViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        bindViewModel()
+        setupBindings()
+        setupAnimations()
     }
     
-    // MARK: - Setup Methods
+    // MARK: - Private Methods
     private func setupUI() {
-        self.title = vm.heroe.name
-        if let url = URL(string: vm.heroe.photo) {
+        self.title = vm.hero.name
+        // Configuración de la imagen
+        setupImageView()
+        // Configuración de la descripción
+        setupDescriptionLabel()
+        // Configuración del CollectionView
+        setupCollectionView()
+    }
+    
+    private func setupImageView() {
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.systemGray4.cgColor
+        
+        if let url = URL(string: vm.hero.photo) {
             self.imageView.loadImageRemote(url: url)
         }
-        self.descriptionLabel.text = vm.heroe.description
-        
-        // Configuración inicial del CollectionView
+    }
+    
+    private func setupDescriptionLabel() {
+        descriptionLabel.text = vm.hero.description
+    }
+    
+    private func setupCollectionView() {
         transformationsCollectionView.isHidden = true
         transformationsCollectionView.register(UINib(nibName: "TransformationCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TransformationCell")
         transformationsCollectionView.dataSource = self
         transformationsCollectionView.delegate = self
     }
     
-    private func bindViewModel() {
+    private func setupBindings() {
         // Observar cambios en `transformations`
         vm.$transformations
             .receive(on: DispatchQueue.main)
             .sink { [weak self] transformations in
-                let hasTransformations = transformations != nil
-                self?.updateCollectionViewVisibility(hasTransformations: hasTransformations)
-                self?.transformationsCollectionView.reloadData()
+                self?.updateCollectionView(transformations: transformations)
             }
             .store(in: &subscriptions)
     }
     
-    func updateCollectionViewVisibility(hasTransformations: Bool) {
+    private func setupAnimations() {
+        // Animación de la imagen
+        imageView.alpha = 0
+        imageView.transform = CGAffineTransform(translationX: 0, y: 20)
+        UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseOut, animations: {
+            self.imageView.alpha = 1
+            self.imageView.transform = .identity
+        }, completion: nil)
+        
+        // Animación de la descripción
+        descriptionLabel.alpha = 0
+        UIView.animate(withDuration: 0.4, delay: 0.3, options: .curveEaseOut, animations: {
+            self.descriptionLabel.alpha = 1
+        }, completion: nil)
+    }
+    
+    private func updateCollectionView(transformations: [Transformation]?) {
+        let hasTransformations = transformations != nil && !(transformations?.isEmpty ?? true)
+        transformationsCollectionView.reloadData()
+        updateCollectionViewVisibility(hasTransformations: hasTransformations)
+    }
+    
+    private func updateCollectionViewVisibility(hasTransformations: Bool) {
         if hasTransformations {
             transformationsCollectionView.isHidden = false
-            collectionViewHeightConstraint.constant = 250 // Altura deseada del CollectionView
-        } else {
-            transformationsCollectionView.isHidden = true
-            collectionViewHeightConstraint.constant = 0 // Altura cero
-        }
-        
-        // Animar los cambios en el layout
-        UIView.animate(withDuration: 0.3) {
+            collectionViewHeightConstraint.constant = 250
             self.view.layoutIfNeeded()
+            
+            transformationsCollectionView.transform = CGAffineTransform(translationX: 0, y: self.transformationsCollectionView.bounds.height)
+            
+            UIView.animate(withDuration: 0.6, delay: 0.3, options: .curveEaseOut, animations: {
+                self.transformationsCollectionView.transform = .identity
+            }, completion: nil)
+        } else {
+            // Animar el collectionView para que se desplace hacia abajo y luego ocultarlo
+            UIView.animate(withDuration: 0.6, animations: {
+                self.transformationsCollectionView.transform = CGAffineTransform(translationX: 0, y: self.transformationsCollectionView.bounds.height)
+            }, completion: { _ in
+                self.transformationsCollectionView.isHidden = true
+                self.transformationsCollectionView.transform = .identity
+                self.collectionViewHeightConstraint.constant = 0
+                self.view.layoutIfNeeded()
+            })
         }
     }
 }
-
 // MARK: - UICollectionViewDataSource
 extension DetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return vm.transformations?.count ?? 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TransformationCell", for: indexPath) as? TransformationCollectionViewCell,
-              let transformation = vm.transformations?[indexPath.item] else {
+        guard
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TransformationCell", for: indexPath) as? TransformationCollectionViewCell,
+            let transformation = vm.transformations?[indexPath.item]
+        else {
             return UICollectionViewCell()
         }
         

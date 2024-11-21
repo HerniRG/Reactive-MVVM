@@ -10,46 +10,74 @@ import Combine
 import CombineCocoa
 
 final class LoginViewController: UIViewController {
-    
+
     // MARK: - Outlets
-    @IBOutlet weak var userTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var stackViewConstraintY: NSLayoutConstraint!
-    
+    @IBOutlet private weak var userTextField: UITextField!
+    @IBOutlet private weak var passwordTextField: UITextField!
+    @IBOutlet private weak var loginButton: UIButton!
+    @IBOutlet private weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var stackViewConstraintY: NSLayoutConstraint!
+
     // MARK: - Properties
     private var user: String = ""
     private var password: String = ""
-    private let vm = LoginViewModel()
+    private let passwordToggleButton = UIButton(type: .custom)
+    private let viewModel = LoginViewModel()
     private var subscriptions = Set<AnyCancellable>()
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
-        bindViewModel()
+        setupUI()
+        setupBindings()
         registerKeyboardNotifications()
     }
-    
+
     deinit {
         unregisterKeyboardNotifications()
     }
-    
+
     // MARK: - Setup Methods
-    private func configureUI() {
+    private func setupUI() {
         setupInitialUIState()
-        observeTextFields()
+        setupLoginButton()
+        configurePasswordToggleButton()
     }
-    
+
     private func setupInitialUIState() {
-        loginButton.isHidden = true
         userTextField.isHidden = true
         passwordTextField.isHidden = true
+        loginButton.isHidden = true
         loadingIndicator.startAnimating()
     }
-    
-    private func observeTextFields() {
+
+    private func setupLoginButton() {
+        loginButton.isEnabled = false
+        loginButton.layer.cornerRadius = 8
+    }
+    private func configurePasswordToggleButton() {
+        let eyeImage = UIImage(systemName: "eye.slash.fill")
+        passwordToggleButton.setImage(eyeImage, for: .normal)
+        passwordToggleButton.tintColor = .gray
+        passwordToggleButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
+
+        let rightViewContainer = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 24))
+        passwordToggleButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        rightViewContainer.addSubview(passwordToggleButton)
+
+        passwordTextField.rightView = rightViewContainer
+        passwordTextField.rightViewMode = .always
+    }
+
+    // MARK: - Bindings
+    private func setupBindings() {
+        bindTextFields()
+        bindViewModelState()
+        bindToastMessage()
+        observeLoginButtonTap()
+    }
+
+    private func bindTextFields() {
         userTextField.textPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] user in
@@ -57,7 +85,7 @@ final class LoginViewController: UIViewController {
                 self?.updateLoginButtonState()
             }
             .store(in: &subscriptions)
-        
+
         passwordTextField.textPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] password in
@@ -66,25 +94,18 @@ final class LoginViewController: UIViewController {
             }
             .store(in: &subscriptions)
     }
-    
-    // MARK: - ViewModel Binding
-    private func bindViewModel() {
-        bindState()
-        bindToastMessage()
-        observeLoginButtonTap()
-    }
-    
-    private func bindState() {
-        vm.$state
+
+    private func bindViewModelState() {
+        viewModel.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.handleStateChange(state)
             }
             .store(in: &subscriptions)
     }
-    
+
     private func bindToastMessage() {
-        vm.$toastMessage
+        viewModel.$toastMessage
             .compactMap { $0 } // Ignorar valores nulos
             .receive(on: DispatchQueue.main)
             .sink { [weak self] toastMessage in
@@ -92,7 +113,7 @@ final class LoginViewController: UIViewController {
             }
             .store(in: &subscriptions)
     }
-    
+
     private func observeLoginButtonTap() {
         loginButton.tapPublisher
             .receive(on: DispatchQueue.main)
@@ -103,8 +124,25 @@ final class LoginViewController: UIViewController {
             }
             .store(in: &subscriptions)
     }
+
+    // MARK: - Actions
+    private func handleLogin() async {
+        await viewModel.login(user: user, password: password)
+    }
     
-    // MARK: - UI Updates
+    @objc private func togglePasswordVisibility() {
+        passwordTextField.isSecureTextEntry.toggle()
+        let eyeImageName = passwordTextField.isSecureTextEntry ? "eye.slash.fill" : "eye.fill"
+        let eyeImage = UIImage(systemName: eyeImageName)
+        passwordToggleButton.setImage(eyeImage, for: .normal)
+
+        if let existingText = passwordTextField.text, passwordTextField.isFirstResponder {
+            passwordTextField.text = ""
+            passwordTextField.insertText(existingText)
+        }
+    }
+
+    // MARK: - State Handling
     private func handleStateChange(_ state: State) {
         switch state {
         case .loading:
@@ -115,44 +153,57 @@ final class LoginViewController: UIViewController {
             navigateToHeroes()
         }
     }
-    
+
+    // MARK: - UI Updates
     private func showLoading() {
         loadingIndicator.startAnimating()
         userTextField.isHidden = true
         passwordTextField.isHidden = true
         loginButton.isHidden = true
     }
-    
+
     private func showLoginUI() {
         loadingIndicator.stopAnimating()
         userTextField.isHidden = false
         passwordTextField.isHidden = false
         loginButton.isHidden = false
+        animateLoginUI()
     }
-    
+
+    private func updateLoginButtonState() {
+        loginButton.isEnabled = !user.isEmpty && !password.isEmpty
+    }
+
     private func showToast(message: String, isError: Bool) {
         let toast = ToastView()
         let backgroundColor: UIColor = isError ? .darkRed : .darkGreen
         toast.configure(message: message, backgroundColor: backgroundColor)
         toast.show(in: view)
     }
-    
-    private func updateLoginButtonState() {
-        loginButton.isEnabled = !user.isEmpty && !password.isEmpty
-    }
-    
+
     private func navigateToHeroes() {
-        let herosVC = HeroTableViewController(nibName: "HeroTableViewController", bundle: nil)
-        
+        let heroesVC = HeroTableViewController(nibName: "HeroTableViewController", bundle: nil)
         guard let navigationController = navigationController else {
             print("NavigationController no disponible")
             return
         }
-        
-        // Reemplazar la pila de vistas para evitar el botón "Back"
-        navigationController.setViewControllers([herosVC], animated: true)
+        navigationController.setViewControllers([heroesVC], animated: true)
     }
-    
+
+    // MARK: - Animations
+    private func animateLoginUI() {
+        userTextField.alpha = 0
+        passwordTextField.alpha = 0
+        loginButton.alpha = 0
+
+        UIView.animate(withDuration: 0.5, animations: {
+            self.userTextField.alpha = 1
+            self.passwordTextField.alpha = 1
+            self.loginButton.alpha = 1
+        })
+    }
+
+    // MARK: - Keyboard Handling
     private func registerKeyboardNotifications() {
         NotificationCenter.default.addObserver(
             self,
@@ -169,37 +220,36 @@ final class LoginViewController: UIViewController {
     }
 
     private func unregisterKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
-    
+
     @objc private func keyboardWillShow(notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
             return
         }
-        
-        // Ajustar el desplazamiento
-        let keyboardHeight = keyboardFrame.height
-        stackViewConstraintY.constant = -keyboardHeight / 3 // Mueve el stackView hacia arriba (ajusta el divisor según necesidad)
 
-        // Animación para hacer el cambio suave
+        let keyboardHeight = keyboardFrame.height
+        stackViewConstraintY.constant = -keyboardHeight / 3
+
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
 
     @objc private func keyboardWillHide(notification: Notification) {
-        // Restaurar la posición original del stackView
         stackViewConstraintY.constant = 0
-        
-        // Animación para hacer el cambio suave
+
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-    }
-    
-    // MARK: - Actions
-    private func handleLogin() async {
-        await vm.login(user: user, password: password)
     }
 }
