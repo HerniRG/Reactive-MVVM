@@ -8,18 +8,18 @@
 import Foundation
 
 final class HeroUseCase: HeroUseCaseProtocol {
-
+    
     var heroRepo: HeroRepositoryProtocol
-
+    
     init(heroRepo: HeroRepositoryProtocol = DefaultHeroRepository(heroService: HeroService())) {
         self.heroRepo = heroRepo
     }
-
+    
     /// Obtiene la lista de héroes, opcionalmente filtrados por nombre.
     func getHeroes(filter: String) async throws -> [Hero] {
         return try await heroRepo.getHeroes(filter: filter)
     }
-
+    
     /// Elimina el token almacenado, realizando el logout del usuario.
     func logout() {
         TokenManager.shared.deleteToken()
@@ -41,10 +41,10 @@ final class HeroUseCase: HeroUseCaseProtocol {
 /// ```
 
 final class HeroUseCaseFake: HeroUseCaseProtocol {
-
+    
     /// Repositorio ficticio requerido por el protocolo
     var heroRepo: any HeroRepositoryProtocol
-
+    
     /// Lista de héroes simulados.
     private let fakeHeroes: [Hero] = [
         Hero(
@@ -64,17 +64,20 @@ final class HeroUseCaseFake: HeroUseCaseProtocol {
             transformations: nil
         )
     ]
-
+    
     /// Inicializador que acepta un repositorio ficticio opcional.
     init(heroRepo: any HeroRepositoryProtocol = DefaultHeroRepository(heroService: HeroService())) {
         self.heroRepo = heroRepo
     }
-
+    
     /// Simula la obtención de héroes, devolviendo dos héroes predefinidos.
     func getHeroes(filter: String) async throws -> [Hero] {
+        if filter.isEmpty {
+            return fakeHeroes
+        }
         return fakeHeroes.filter { $0.name.localizedCaseInsensitiveContains(filter) }
     }
-
+    
     /// Simula el proceso de logout, eliminando el token.
     func logout() {
         print("Fake logout executed")
