@@ -11,18 +11,17 @@ import Foundation
 // MARK: - ViewModel para la Lista de Héroes
 @MainActor
 final class HeroesViewModel: ObservableObject {
-    
+
     // MARK: - Propiedades Publicadas
-    @Published var heroes: [Hero] = []          // Lista de héroes obtenidos
-    @Published var isLoading: Bool = false      // Indica si está cargando datos
-    @Published var showError: Bool = false      // Indica si ocurrió un error durante la carga
+    @Published var heroes: [Hero] = []
+    @Published var isLoading: Bool = false
+    @Published var showError: Bool = false
 
     // MARK: - Propiedades Privadas
-    private let heroUseCase: HeroUseCaseProtocol   // Caso de uso para obtener los héroes
+    private let heroUseCase: HeroUseCaseProtocol
 
     // MARK: - Inicializador
-    /// Inicializa el ViewModel con un caso de uso de héroes.
-    /// - Parameter heroUseCase: Protocolo que define el caso de uso para obtener héroes.
+
     init(heroUseCase: HeroUseCaseProtocol = HeroUseCase()) {
         self.heroUseCase = heroUseCase
         // Cargar la lista de héroes al inicializar
@@ -33,9 +32,7 @@ final class HeroesViewModel: ObservableObject {
 
     // MARK: - Métodos Públicos
     /// Carga la lista de héroes, opcionalmente filtrados por nombre.
-    /// - Parameter filter: Cadena de texto para filtrar los héroes por nombre.
     func loadHeroes(filter: String = "") async {
-        // Actualizar el estado a cargando y resetear el error
         isLoading = true
         showError = false
 
@@ -43,20 +40,16 @@ final class HeroesViewModel: ObservableObject {
             // Intentar obtener los héroes utilizando el caso de uso
             let heroes = try await heroUseCase.getHeroes(filter: filter)
             self.heroes = heroes
-            // Mostrar error si la lista de héroes está vacía
-            showError = heroes.isEmpty
+            showError = heroes.isEmpty  // Mostrar error si no hay héroes
         } catch {
-            // Si ocurre un error, actualizar el estado de error
-            showError = true
-            print("Error al cargar héroes: \(error.localizedDescription)")
+            showError = true  // Actualizar estado si ocurre un error
         }
 
-        // Finalizar el estado de carga
-        isLoading = false
+        isLoading = false  // Finalizar estado de carga
     }
-    
+
     /// Realiza el proceso de logout eliminando el token almacenado.
     func logout() {
-        TokenManager.shared.deleteToken()
+        heroUseCase.logout()
     }
 }

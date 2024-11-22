@@ -105,7 +105,7 @@ final class LoginViewController: UIViewController {
     }
 
     private func bindToastMessage() {
-        viewModel.$toastMessage
+        viewModel.$userMessage
             .compactMap { $0 } // Ignorar valores nulos
             .receive(on: DispatchQueue.main)
             .sink { [weak self] toastMessage in

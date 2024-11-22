@@ -11,101 +11,78 @@ enum State {
 // MARK: - ViewModel del Login
 @MainActor
 final class LoginViewModel: ObservableObject {
-    
+
     // MARK: - Publicación de Propiedades
     @Published var state: State = .loading
-    @Published var toastMessage: (message: String, isError: Bool)?
-    
+    @Published var userMessage: (message: String, isError: Bool)?
+
     // MARK: - Propiedades Privadas
     private let loginUseCase: LoginUseCaseProtocol
-    
+
     // MARK: - Inicializador
     init(loginUseCase: LoginUseCaseProtocol = LoginUseCase()) {
         self.loginUseCase = loginUseCase
-        checkToken()
+        initializeState()
     }
-    
+
     // MARK: - Métodos Públicos
-    /// Realiza el proceso de login con el usuario y contraseña proporcionados.
-    /// - Parameters:
-    ///   - user: Nombre de usuario.
-    ///   - password: Contraseña del usuario.
+
+    /// Realiza el login del usuario.
     func login(user: String, password: String) async {
-        // Limpiar cualquier mensaje previo
-        toastMessage = nil
-        // Actualizar el estado a cargando
-        state = .loading
-        
+        clearUserMessage()
+        updateState(to: .loading)
+
         do {
-            // Intentar realizar el login mediante el caso de uso
-            let success = try await loginUseCase.loginApp(user: user, password: password)
-            
-            if success {
-                handleLoginSuccess()
-            } else {
-                // Manejo de caso inesperado donde success es false
-                handleLoginError(AuthenticationError.invalidCredentials)
+            guard try await loginUseCase.loginApp(user: user, password: password) else {
+                setUserMessage("Error inesperado", isError: true)
+                updateState(to: .showLogin)
+                return
             }
+            setUserMessage("Login exitoso", isError: false)
+            updateStateWithDelay(to: .navigateToHeroes)
         } catch {
-            // Manejar el error ocurrido durante el login
             handleLoginError(error)
         }
     }
-    
+
     // MARK: - Métodos Privados
-    /// Verifica si existe un token válido almacenado y actualiza el estado de la vista en consecuencia.
-    private func checkToken() {
-        if let token = TokenManager.shared.loadToken(), !token.isEmpty {
-            print("Token válido encontrado: \(token)")
-            // Mostrar mensaje de bienvenida
-            toastMessage = (message: "Bienvenido de nuevo", isError: false)
-            // Navegar a la pantalla de héroes después de una breve espera
-            Task {
-                try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 segundo
-                state = .navigateToHeroes
-            }
+
+    /// Inicializa el estado de la vista según la existencia de un token.
+    private func initializeState() {
+        if loginUseCase.checkToken() {
+            setUserMessage("Bienvenido de nuevo", isError: false)
+            updateStateWithDelay(to: .navigateToHeroes)
         } else {
-            print("No se encontró un token válido")
-            // Mostrar la interfaz de login
-            state = .showLogin
+            updateState(to: .showLogin)
         }
     }
-    
-    /// Maneja el éxito del login actualizando el estado y mostrando un mensaje.
-    private func handleLoginSuccess() {
-        // Publicar el mensaje de éxito
-        toastMessage = (message: "Login exitoso", isError: false)
-        // Navegar a la pantalla de héroes después de una breve espera
+
+    /// Limpia el mensaje del usuario.
+    private func clearUserMessage() {
+        userMessage = nil
+    }
+
+    /// Actualiza el estado de la vista.
+    private func updateState(to newState: State) {
+        state = newState
+    }
+
+    /// Actualiza el estado de la vista con un breve retraso.
+    private func updateStateWithDelay(to newState: State) {
         Task {
             try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 segundo
-            state = .navigateToHeroes
+            updateState(to: newState)
         }
     }
-    
-    /// Maneja los errores ocurridos durante el login y muestra mensajes adecuados.
-    /// - Parameter error: Error ocurrido durante el login.
+
+    /// Establece un mensaje para el usuario.
+    private func setUserMessage(_ message: String, isError: Bool) {
+        userMessage = (message: message, isError: isError)
+    }
+
+    /// Maneja los errores ocurridos durante el login.
     private func handleLoginError(_ error: Error) {
-        let errorMessage: String
-        
-        // Determinar el mensaje de error según el tipo de error
-        if let authError = error as? AuthenticationError {
-            errorMessage = authError.localizedDescription
-        } else if let urlError = error as? URLError {
-            switch urlError.code {
-            case .notConnectedToInternet:
-                errorMessage = "No hay conexión a internet. Por favor, verifica tu red."
-            case .timedOut:
-                errorMessage = "La solicitud ha tardado demasiado. Inténtalo más tarde."
-            default:
-                errorMessage = "Ha ocurrido un error de red. Intenta nuevamente."
-            }
-        } else {
-            errorMessage = "Ha ocurrido un error desconocido."
-        }
-        
-        // Publicar el mensaje de error
-        toastMessage = (message: errorMessage, isError: true)
-        // Volver a mostrar la interfaz de login
-        state = .showLogin
+        setUserMessage(error.localizedDescription, isError: true)
+        updateState(to: .showLogin)
     }
 }
