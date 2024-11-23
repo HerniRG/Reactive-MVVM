@@ -10,7 +10,6 @@ import UIKit
 
 extension UIImageView {
     func loadImageRemote(url: URL) {
-
         let placeholderImage = UIImage(named: "person")
         
         // Asignar el placeholder inicial en el hilo principal
@@ -18,11 +17,21 @@ extension UIImageView {
             self.image = placeholderImage
         }
         
+        // Cargar la imagen de forma asíncrona
         DispatchQueue.global().async { [weak self] in
             if let data = try? Data(contentsOf: url),
                let image = UIImage(data: data) {
                 DispatchQueue.main.async {
-                    self?.image = image
+                    // Usar fade-in al asignar la nueva imagen
+                    UIView.transition(
+                        with: self!,
+                        duration: 0.3,
+                        options: .transitionCrossDissolve,
+                        animations: {
+                            self?.image = image
+                        },
+                        completion: nil
+                    )
                 }
             }
         }

@@ -84,7 +84,7 @@ class HeroTableViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] showError in
                 self?.errorLabel.isHidden = !showError
-                self?.errorLabel.text = "No se han cargado los héroes correctamente."
+                self?.errorLabel.text = "No se han cargado los héroes correctamente 🦸‍"
                 self?.tableView.isHidden = showError
             }
             .store(in: &cancellables)
@@ -128,7 +128,7 @@ class HeroTableViewController: UIViewController {
     }
 }
 
-    // MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 extension HeroTableViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -155,12 +155,31 @@ extension HeroTableViewController: UITableViewDataSource {
     }
 }
 
-    // MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 extension HeroTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedHero = viewModel.heroes[indexPath.row]
-        let detailViewModel = DetailsViewModel(hero: selectedHero)
-        let detailViewController = DetailsViewController(viewModel: detailViewModel)
-        navigationController?.pushViewController(detailViewController, animated: true)
+        tableView.isUserInteractionEnabled = false
+        
+        if let cell = tableView.cellForRow(at: indexPath) {
+            // Animación de escala
+            UIView.animate(withDuration: 0.1,
+                           animations: {
+                cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            },
+                           completion: { _ in
+                UIView.animate(withDuration: 0.1, animations: {
+                    cell.transform = CGAffineTransform.identity
+                })
+            })
+        }
+        
+        // Retrasar la navegación para que la animación se vea
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            let selectedHero = self?.viewModel.heroes[indexPath.row]
+            let detailViewModel = DetailsViewModel(hero: selectedHero!)
+            let detailViewController = DetailsViewController(viewModel: detailViewModel)
+            self?.navigationController?.pushViewController(detailViewController, animated: true)
+            tableView.isUserInteractionEnabled = true
+        }
     }
 }
