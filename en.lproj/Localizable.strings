@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  KCReactive
+
+  Created by Hernán Rodríguez on 24/11/24.
+  
+*/
+
+"Email" = "Email";
+"Password" = "Password";
+"Login" = "Login";
+"Heroes" = "Heroes";
+"UnexpectedError" = "Unexpected error";
+"LoginSuccess" = "Login successful";
+"WelcomeBack" = "Welcome back";
+"InvalidCredentials" = "Invalid username or password. Please check your credentials.";
+"AccessDenied" = "You do not have permission to access this resource.";
+"ServerError" = "The server encountered an issue (Code: %d). Please try again later.";
+"NetworkError" = "Network error. Please check your connection.";
+"UnexpectedError" = "An unexpected error occurred. Please try again later.";
+"HeroesError" = "Failed to load heroes 🦸‍";

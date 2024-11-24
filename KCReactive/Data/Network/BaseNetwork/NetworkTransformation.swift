@@ -21,13 +21,13 @@ final class TransformationService: TransformationServiceProtocol {
             httpMethod: HTTPMethods.post,
             body: TransformationFilter(id: id)
         ) else {
-            throw URLError(.badURL)
+            throw AuthenticationError.unexpectedError
         }
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
-                throw URLError(.badServerResponse)
+                throw AuthenticationError.unexpectedError
             }
             
             switch httpResponse.statusCode {
@@ -40,10 +40,14 @@ final class TransformationService: TransformationServiceProtocol {
             case HTTPResponseCodes.serverErrorRange:
                 throw AuthenticationError.serverError(statusCode: httpResponse.statusCode)
             default:
-                throw URLError(.badServerResponse)
+                throw AuthenticationError.unexpectedError
             }
+        } catch let error as AuthenticationError {
+            throw error // Mantén los errores específicos de AuthenticationError
+        } catch _ as URLError {
+            throw AuthenticationError.networkError // Traduce errores de red específicos
         } catch {
-            throw error // Propagar errores encontrados
+            throw AuthenticationError.unexpectedError // Captura otros errores
         }
     }
 }
@@ -102,8 +106,8 @@ final class TransformationServiceFake: TransformationServiceProtocol {
             return []
         
         case .error:
-            // Simula un error
-            throw URLError(.notConnectedToInternet)
+            // Simula un error de red
+            throw AuthenticationError.networkError
         
         case .delayedSuccess:
             // Simula un retraso antes de devolver las transformaciones

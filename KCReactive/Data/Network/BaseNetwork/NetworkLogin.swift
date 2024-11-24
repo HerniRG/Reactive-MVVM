@@ -14,8 +14,9 @@ final class NetworkLogin: NetworkLoginProtocol {
     func loginApp(user: String, password: String) async throws -> String {
         let urlString = "\(ConstantsApp.CONST_SERVER_URL)\(Endpoints.login.rawValue)"
         let credentials = "\(user):\(password)"
+        
         guard let encodedCredentials = credentials.data(using: .utf8)?.base64EncodedString() else {
-            throw URLError(.badURL)
+            throw AuthenticationError.unexpectedError
         }
         
         guard var request = BaseNetwork.createRequest(
@@ -23,21 +24,20 @@ final class NetworkLogin: NetworkLoginProtocol {
             httpMethod: HTTPMethods.post,
             requiresAuth: false
         ) else {
-            throw URLError(.badURL)
+            throw AuthenticationError.unexpectedError
         }
         request.addValue("Basic \(encodedCredentials)", forHTTPHeaderField: "Authorization")
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
-                throw URLError(.badServerResponse)
+                throw AuthenticationError.unexpectedError
             }
-            
+
             switch httpResponse.statusCode {
             case HTTPResponseCodes.success:
-                // Token decodificado correctamente
                 guard let token = String(data: data, encoding: .utf8), !token.isEmpty else {
-                    throw URLError(.cannotDecodeContentData)
+                    throw AuthenticationError.serverError(statusCode: 500)
                 }
                 return token
             case HTTPResponseCodes.unauthorized:
@@ -47,10 +47,14 @@ final class NetworkLogin: NetworkLoginProtocol {
             case HTTPResponseCodes.serverErrorRange:
                 throw AuthenticationError.serverError(statusCode: httpResponse.statusCode)
             default:
-                throw URLError(.badServerResponse)
+                throw AuthenticationError.unexpectedError
             }
-        } catch {
+        } catch let error as AuthenticationError {
             throw error
+        } catch _ as URLError {
+            throw AuthenticationError.networkError
+        } catch {
+            throw AuthenticationError.unexpectedError
         }
     }
 }
@@ -87,18 +91,12 @@ final class NetworkLoginFake: NetworkLoginProtocol {
         case .success:
             // Simular un login exitoso
             return "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJleHBpcmF0aW9uIjo2NDA5MjIxMTIwMCwiaWRlbnRpZnkiOiI0MURCRTlGNy04MzVFLTQ1RkUtOTJBMi1CMDI5NUNCN0E5QjgiLCJlbWFpbCI6Imhlcm5hbnJnODVAZ21haWwuY29tIn0.oBNMWqw0n8SBpf36ls8rFQijukSrURkzyXO2qXW6rS8"
-
         case .invalidCredentials:
-            // Simular credenciales inválidas
             throw AuthenticationError.invalidCredentials
-
         case .serverError:
-            // Simular un error del servidor
             throw AuthenticationError.serverError(statusCode: 500)
-
         case .networkError:
-            // Simular un error de red
-            throw URLError(.notConnectedToInternet)
+            throw AuthenticationError.networkError
         }
     }
 }

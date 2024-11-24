@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		663658D72CE73D5E000EA09D /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 663658D62CE73D5E000EA09D /* CombineCocoa */; };
+		66779B402CF3847B0052C9AA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66779B3E2CF3847B0052C9AA /* Localizable.strings */; };
+		66779B412CF3847B0052C9AA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66779B3E2CF3847B0052C9AA /* Localizable.strings */; };
 		66813AE92CEE31EA00D1FACE /* TransformationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66813AD02CEE31EA00D1FACE /* TransformationCollectionViewCell.xib */; };
 		66813AEA2CEE31EA00D1FACE /* DetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66813AD32CEE31EA00D1FACE /* DetailsViewController.xib */; };
 		66813AEB2CEE31EA00D1FACE /* HeroTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66813AD62CEE31EA00D1FACE /* HeroTableViewCell.xib */; };
@@ -67,16 +69,12 @@
 			remoteGlobalIDString = 66D1D3F62CE678E200F546B2;
 			remoteInfo = KCReactive;
 		};
-		66D1D4182CE678E400F546B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66D1D3EF2CE678E200F546B2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 66D1D3F62CE678E200F546B2;
-			remoteInfo = KCReactive;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		66779B3F2CF3847B0052C9AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		66779B422CF384CF0052C9AA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		66779B432CF384F40052C9AA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		66813ABB2CEE31EA00D1FACE /* AuthenticationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationError.swift; sourceTree = "<group>"; };
 		66813ABC2CEE31EA00D1FACE /* NetworkLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogin.swift; sourceTree = "<group>"; };
 		66813ABD2CEE31EA00D1FACE /* BaseNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNetwork.swift; sourceTree = "<group>"; };
@@ -128,18 +126,12 @@
 		66C8828B2CF3263000626D35 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		66D1D3F72CE678E200F546B2 /* KCReactive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KCReactive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D1D40D2CE678E400F546B2 /* KCReactiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCReactiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		66D1D4172CE678E400F546B2 /* KCReactiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCReactiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		66D1D4102CE678E400F546B2 /* KCReactiveTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = KCReactiveTests;
-			sourceTree = "<group>";
-		};
-		66D1D41A2CE678E400F546B2 /* KCReactiveUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = KCReactiveUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -155,13 +147,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		66D1D40A2CE678E400F546B2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		66D1D4142CE678E400F546B2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -438,9 +423,9 @@
 		66D1D3EE2CE678E200F546B2 = {
 			isa = PBXGroup;
 			children = (
+				66779B3E2CF3847B0052C9AA /* Localizable.strings */,
 				66813AE82CEE31EA00D1FACE /* KCReactive */,
 				66D1D4102CE678E400F546B2 /* KCReactiveTests */,
-				66D1D41A2CE678E400F546B2 /* KCReactiveUITests */,
 				66D1D3F82CE678E200F546B2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -450,7 +435,6 @@
 			children = (
 				66D1D3F72CE678E200F546B2 /* KCReactive.app */,
 				66D1D40D2CE678E400F546B2 /* KCReactiveTests.xctest */,
-				66D1D4172CE678E400F546B2 /* KCReactiveUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -502,29 +486,6 @@
 			productReference = 66D1D40D2CE678E400F546B2 /* KCReactiveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		66D1D4162CE678E400F546B2 /* KCReactiveUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 66D1D4282CE678E400F546B2 /* Build configuration list for PBXNativeTarget "KCReactiveUITests" */;
-			buildPhases = (
-				66D1D4132CE678E400F546B2 /* Sources */,
-				66D1D4142CE678E400F546B2 /* Frameworks */,
-				66D1D4152CE678E400F546B2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				66D1D4192CE678E400F546B2 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				66D1D41A2CE678E400F546B2 /* KCReactiveUITests */,
-			);
-			name = KCReactiveUITests;
-			packageProductDependencies = (
-			);
-			productName = KCReactiveUITests;
-			productReference = 66D1D4172CE678E400F546B2 /* KCReactiveUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -542,10 +503,6 @@
 						CreatedOnToolsVersion = 16.1;
 						TestTargetID = 66D1D3F62CE678E200F546B2;
 					};
-					66D1D4162CE678E400F546B2 = {
-						CreatedOnToolsVersion = 16.1;
-						TestTargetID = 66D1D3F62CE678E200F546B2;
-					};
 				};
 			};
 			buildConfigurationList = 66D1D3F22CE678E200F546B2 /* Build configuration list for PBXProject "KCReactive" */;
@@ -554,6 +511,7 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
 			);
 			mainGroup = 66D1D3EE2CE678E200F546B2;
 			minimizedProjectReferenceProxies = 1;
@@ -568,7 +526,6 @@
 			targets = (
 				66D1D3F62CE678E200F546B2 /* KCReactive */,
 				66D1D40C2CE678E400F546B2 /* KCReactiveTests */,
-				66D1D4162CE678E400F546B2 /* KCReactiveUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -583,6 +540,7 @@
 				66813AEB2CEE31EA00D1FACE /* HeroTableViewCell.xib in Resources */,
 				66813AEC2CEE31EA00D1FACE /* HeroTableViewController.xib in Resources */,
 				66813AED2CEE31EA00D1FACE /* LoginViewController.xib in Resources */,
+				66779B412CF3847B0052C9AA /* Localizable.strings in Resources */,
 				66813AEE2CEE31EA00D1FACE /* Assets.xcassets in Resources */,
 				66813AF02CEE31EA00D1FACE /* LaunchScreen.storyboard in Resources */,
 			);
@@ -592,13 +550,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		66D1D4152CE678E400F546B2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				66779B402CF3847B0052C9AA /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,13 +612,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		66D1D4132CE678E400F546B2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -675,18 +620,23 @@
 			target = 66D1D3F62CE678E200F546B2 /* KCReactive */;
 			targetProxy = 66D1D40E2CE678E400F546B2 /* PBXContainerItemProxy */;
 		};
-		66D1D4192CE678E400F546B2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 66D1D3F62CE678E200F546B2 /* KCReactive */;
-			targetProxy = 66D1D4182CE678E400F546B2 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		66779B3E2CF3847B0052C9AA /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				66779B3F2CF3847B0052C9AA /* en */,
+				66779B432CF384F40052C9AA /* es */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		66813AE32CEE31EA00D1FACE /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				66813AE22CEE31EA00D1FACE /* Base */,
+				66779B422CF384CF0052C9AA /* es */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -765,6 +715,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -828,6 +779,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -917,40 +869,6 @@
 			};
 			name = Release;
 		};
-		66D1D4292CE678E400F546B2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9M98K8Y584;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = herni.rg.KCReactiveUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = KCReactive;
-			};
-			name = Debug;
-		};
-		66D1D42A2CE678E400F546B2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9M98K8Y584;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = herni.rg.KCReactiveUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = KCReactive;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -977,15 +895,6 @@
 			buildConfigurations = (
 				66D1D4262CE678E400F546B2 /* Debug */,
 				66D1D4272CE678E400F546B2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		66D1D4282CE678E400F546B2 /* Build configuration list for PBXNativeTarget "KCReactiveUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				66D1D4292CE678E400F546B2 /* Debug */,
-				66D1D42A2CE678E400F546B2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

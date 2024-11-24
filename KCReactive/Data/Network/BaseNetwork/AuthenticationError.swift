@@ -11,15 +11,21 @@ enum AuthenticationError: LocalizedError {
     case invalidCredentials
     case accessDenied
     case serverError(statusCode: Int)
+    case networkError
+    case unexpectedError
     
     var errorDescription: String? {
         switch self {
         case .invalidCredentials:
-            return "Usuario o contraseña incorrectos. Verifica tus credenciales."
+            return NSLocalizedString("InvalidCredentials", comment: "Invalid credentials error")
         case .accessDenied:
-            return "No tienes permiso para acceder a este recurso."
+            return NSLocalizedString("AccessDenied", comment: "Access denied error")
         case .serverError(let statusCode):
-            return "El servidor encontró un problema (Código: \(statusCode)). Intenta más tarde."
+            return String(format: NSLocalizedString("ServerError", comment: "Server error with code"), statusCode)
+        case .networkError:
+            return NSLocalizedString("NetworkError", comment: "Network connectivity error")
+        case .unexpectedError:
+            return NSLocalizedString("UnexpectedError", comment: "Unexpected error")
         }
     }
 }

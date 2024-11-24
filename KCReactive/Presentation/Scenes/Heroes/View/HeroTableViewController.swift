@@ -25,11 +25,10 @@ private extension HeroTableViewController {
     func setupUI() {
         setupNavigationBar()
         setupTableView()
-        setupErrorLabel()
     }
     
     func setupNavigationBar() {
-        title = "Héroes"
+        title = NSLocalizedString("Heroes", comment: "Title for the heroes screen")
         
         let logoutButton = UIBarButtonItem(
             image: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
@@ -47,12 +46,6 @@ private extension HeroTableViewController {
         tableView.delegate = self
         tableView.rowHeight = 160
         tableView.tableFooterView = UIView()
-    }
-    
-    func setupErrorLabel() {
-        errorLabel.isHidden = true
-        errorLabel.textAlignment = .center
-        errorLabel.textColor = .systemRed
     }
 }
 
@@ -82,7 +75,7 @@ private extension HeroTableViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] showError in
                 self?.errorLabel.isHidden = !showError
-                self?.errorLabel.text = "No se han cargado los héroes correctamente 🦸‍"
+                self?.errorLabel.text = NSLocalizedString("HeroesError", comment: "Error message for loading heroes")
                 self?.tableView.isHidden = showError
             }
             .store(in: &cancellables)

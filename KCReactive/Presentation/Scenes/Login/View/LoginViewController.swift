@@ -38,33 +38,39 @@ final class LoginViewController: UIViewController {
 // MARK: - UI Setup
 private extension LoginViewController {
     func setupUI() {
-        setupInitialUIState()
-        setupLoginButton()
+        setupInitialUIState() // Aquí centralizamos toda la configuración inicial
         configurePasswordToggleButton()
     }
-    
+
     func setupInitialUIState() {
+        // Configuración inicial de visibilidad
         userTextField.isHidden = true
         passwordTextField.isHidden = true
         loginButton.isHidden = true
-        loadingIndicator.startAnimating()
-    }
-    
-    func setupLoginButton() {
+        
+        // Configuración de placeholders localizables
+        userTextField.placeholder = NSLocalizedString("Email", comment: "Placeholder for email field")
+        passwordTextField.placeholder = NSLocalizedString("Password", comment: "Placeholder for password field")
+        
+        // Configuración del botón de login
         loginButton.isEnabled = false
         loginButton.layer.cornerRadius = 8
+        loginButton.setTitle(NSLocalizedString("Login", comment: "Title for login button"), for: .normal)
+        
+        // Indicador de carga
+        loadingIndicator.startAnimating()
     }
-    
+
     func configurePasswordToggleButton() {
         let eyeImage = UIImage(systemName: "eye.slash.fill")
         passwordToggleButton.setImage(eyeImage, for: .normal)
         passwordToggleButton.tintColor = .gray
         passwordToggleButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
-        
+
         let rightViewContainer = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 24))
         passwordToggleButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         rightViewContainer.addSubview(passwordToggleButton)
-        
+
         passwordTextField.rightView = rightViewContainer
         passwordTextField.rightViewMode = .always
     }

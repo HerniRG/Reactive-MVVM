@@ -34,11 +34,17 @@ final class LoginViewModel: ObservableObject {
 
         do {
             guard try await loginUseCase.loginApp(user: user, password: password) else {
-                setUserMessage("Error inesperado", isError: true)
+                setUserMessage(
+                    NSLocalizedString("UnexpectedError", comment: "Unexpected error during login"),
+                    isError: true
+                )
                 updateState(to: .showLogin)
                 return
             }
-            setUserMessage("Login exitoso", isError: false)
+            setUserMessage(
+                NSLocalizedString("LoginSuccess", comment: "Successful login message"),
+                isError: false
+            )
             updateStateWithDelay(to: .navigateToHeroes)
         } catch {
             handleLoginError(error)
@@ -50,7 +56,10 @@ final class LoginViewModel: ObservableObject {
     /// Inicializa el estado de la vista según la existencia de un token.
     private func initializeState() {
         if loginUseCase.checkToken() {
-            setUserMessage("Bienvenido de nuevo", isError: false)
+            setUserMessage(
+                NSLocalizedString("WelcomeBack", comment: "Welcome back message for returning user"),
+                isError: false
+            )
             updateStateWithDelay(to: .navigateToHeroes)
         } else {
             updateState(to: .showLogin)
