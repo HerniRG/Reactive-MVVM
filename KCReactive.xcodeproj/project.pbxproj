@@ -54,6 +54,8 @@
 		66813B472CEE603100D1FACE /* TransformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B462CEE603100D1FACE /* TransformationUseCase.swift */; };
 		66813B492CEE638900D1FACE /* HeroRepositoryFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B482CEE638900D1FACE /* HeroRepositoryFake.swift */; };
 		66813B4B2CEE639E00D1FACE /* TransformationRepositoryFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B4A2CEE639E00D1FACE /* TransformationRepositoryFake.swift */; };
+		66C8828A2CF324D600626D35 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C882892CF324C400626D35 /* UIView+Extensions.swift */; };
+		66C8828C2CF3263000626D35 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8828B2CF3263000626D35 /* KeyboardManager.swift */; };
 		66D1D4352CE67AFE00F546B2 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 66D1D4342CE67AFE00F546B2 /* KeychainSwift */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +124,8 @@
 		66813B462CEE603100D1FACE /* TransformationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationUseCase.swift; sourceTree = "<group>"; };
 		66813B482CEE638900D1FACE /* HeroRepositoryFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroRepositoryFake.swift; sourceTree = "<group>"; };
 		66813B4A2CEE639E00D1FACE /* TransformationRepositoryFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationRepositoryFake.swift; sourceTree = "<group>"; };
+		66C882892CF324C400626D35 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		66C8828B2CF3263000626D35 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		66D1D3F72CE678E200F546B2 /* KCReactive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KCReactive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D1D40D2CE678E400F546B2 /* KCReactiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCReactiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D1D4172CE678E400F546B2 /* KCReactiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCReactiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -413,6 +417,8 @@
 		66813B1C2CEE39CC00D1FACE /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				66C8828B2CF3263000626D35 /* KeyboardManager.swift */,
+				66C882892CF324C400626D35 /* UIView+Extensions.swift */,
 				66813AC82CEE31EA00D1FACE /* ToastView.swift */,
 				66813AC92CEE31EA00D1FACE /* UIImage+Extensions.swift */,
 			);
@@ -625,7 +631,9 @@
 				66813AFC2CEE31EA00D1FACE /* UIImage+Extensions.swift in Sources */,
 				66813B3F2CEE5F0800D1FACE /* HeroRepositoryProtocol.swift in Sources */,
 				66813AFD2CEE31EA00D1FACE /* DetailsViewModel.swift in Sources */,
+				66C8828A2CF324D600626D35 /* UIView+Extensions.swift in Sources */,
 				66813AFE2CEE31EA00D1FACE /* HeroesViewModel.swift in Sources */,
+				66C8828C2CF3263000626D35 /* KeyboardManager.swift in Sources */,
 				66813AFF2CEE31EA00D1FACE /* LoginViewModel.swift in Sources */,
 				66813B002CEE31EA00D1FACE /* TransformationCollectionViewCell.swift in Sources */,
 				66813B432CEE5F9B00D1FACE /* TransformationUseCaseProtocol.swift in Sources */,

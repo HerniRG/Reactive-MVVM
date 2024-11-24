@@ -18,19 +18,19 @@ class HeroTableViewController: UIViewController {
         setupUI()
         setupBindings()
     }
-    
-    // MARK: - Private Methods
-    private func setupUI() {
+}
+
+// MARK: - UI Setup
+private extension HeroTableViewController {
+    func setupUI() {
         setupNavigationBar()
         setupTableView()
         setupErrorLabel()
     }
     
-    private func setupNavigationBar() {
-        // Configuración del título
+    func setupNavigationBar() {
         title = "Héroes"
         
-        // Configuración del botón de cerrar sesión
         let logoutButton = UIBarButtonItem(
             image: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
             style: .plain,
@@ -41,24 +41,24 @@ class HeroTableViewController: UIViewController {
         navigationItem.rightBarButtonItem = logoutButton
     }
     
-    private func setupTableView() {
+    func setupTableView() {
         tableView.register(UINib(nibName: "HeroTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.rowHeight = 160 // Establecer altura de fila
-        
-        // Remover separadores de líneas vacías
+        tableView.rowHeight = 160
         tableView.tableFooterView = UIView()
     }
     
-    private func setupErrorLabel() {
+    func setupErrorLabel() {
         errorLabel.isHidden = true
         errorLabel.textAlignment = .center
         errorLabel.textColor = .systemRed
     }
-    
-    private func setupBindings() {
-        // Observar cambios en `heroes`
+}
+
+// MARK: - Bindings
+private extension HeroTableViewController {
+    func setupBindings() {
         viewModel.$heroes
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -67,19 +67,17 @@ class HeroTableViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        // Observar cambios en `isLoading`
         viewModel.$isLoading
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isLoading in
                 self?.loadingIndicator.isHidden = !isLoading
                 self?.tableView.isHidden = isLoading
                 if isLoading {
-                    self?.errorLabel.isHidden = true // Ocultar el errorLabel solo durante la carga
+                    self?.errorLabel.isHidden = true
                 }
             }
             .store(in: &cancellables)
         
-        // Observar cambios en `showError`
         viewModel.$showError
             .receive(on: DispatchQueue.main)
             .sink { [weak self] showError in
@@ -89,41 +87,28 @@ class HeroTableViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
-    
-    @objc private func logoutTapped() {
-        // Borrar el token y volver al login
+}
+
+// MARK: - Actions
+private extension HeroTableViewController {
+    @objc func logoutTapped() {
         viewModel.logout()
         navigateToLogin()
     }
     
-    private func navigateToLogin() {
-        // Descartar el controlador actual y volver al login
+    func navigateToLogin() {
         navigationController?.setViewControllers([LoginViewController()], animated: true)
     }
-    
-    private func animateTableView() {
-        tableView.reloadData()
+}
+
+// MARK: - Animations
+private extension HeroTableViewController {
+    func animateTableView() {
         let cells = tableView.visibleCells
         let tableHeight = tableView.bounds.size.height
-        
-        // Mueve las celdas fuera de la pantalla
-        for cell in cells {
-            cell.transform = CGAffineTransform(translationX: 0, y: tableHeight)
-        }
-        
-        // Animar la entrada de las celdas
-        var delayCounter = 0
-        for cell in cells {
-            UIView.animate(
-                withDuration: 1.0,
-                delay: Double(delayCounter) * 0.05,
-                usingSpringWithDamping: 0.8,
-                initialSpringVelocity: 0,
-                options: .curveEaseInOut,
-                animations: {
-                    cell.transform = CGAffineTransform.identity
-                }, completion: nil)
-            delayCounter += 1
+        for (index, cell) in cells.enumerated() {
+            let delay = Double(index) * 0.05
+            cell.animateFromBottomWithBounce(yOffset: tableHeight, delay: delay)
         }
     }
 }
@@ -161,25 +146,16 @@ extension HeroTableViewController: UITableViewDelegate {
         tableView.isUserInteractionEnabled = false
         
         if let cell = tableView.cellForRow(at: indexPath) {
-            // Animación de escala
-            UIView.animate(withDuration: 0.1,
-                           animations: {
-                cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-            },
-                           completion: { _ in
-                UIView.animate(withDuration: 0.1, animations: {
-                    cell.transform = CGAffineTransform.identity
-                })
-            })
-        }
-        
-        // Retrasar la navegación para que la animación se vea
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-            let selectedHero = self?.viewModel.heroes[indexPath.row]
-            let detailViewModel = DetailsViewModel(hero: selectedHero!)
-            let detailViewController = DetailsViewController(viewModel: detailViewModel)
-            self?.navigationController?.pushViewController(detailViewController, animated: true)
-            tableView.isUserInteractionEnabled = true
+            cell.animatePress {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                    guard let self = self else { return }
+                    let selectedHero = self.viewModel.heroes[indexPath.row]
+                    let detailViewModel = DetailsViewModel(hero: selectedHero)
+                    let detailViewController = DetailsViewController(viewModel: detailViewModel)
+                    self.navigationController?.pushViewController(detailViewController, animated: true)
+                    tableView.isUserInteractionEnabled = true
+                }
+            }
         }
     }
 }

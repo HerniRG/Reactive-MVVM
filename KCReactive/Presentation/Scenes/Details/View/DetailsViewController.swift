@@ -37,15 +37,14 @@ class DetailsViewController: UIViewController {
         setupBindings()
         setupAnimations()
     }
-    
-    // MARK: - Private Methods
+}
+
+// MARK: - UI Setup
+extension DetailsViewController {
     private func setupUI() {
         self.title = vm.hero.name
-        // Configuración de la imagen
         setupImageView()
-        // Configuración de la descripción
         setupDescriptionLabel()
-        // Configuración del CollectionView
         setupCollectionView()
     }
     
@@ -70,9 +69,11 @@ class DetailsViewController: UIViewController {
         transformationsCollectionView.dataSource = self
         transformationsCollectionView.delegate = self
     }
-    
+}
+
+// MARK: - Bindings
+extension DetailsViewController {
     private func setupBindings() {
-        // Observar cambios en `transformations`
         vm.$transformations
             .receive(on: DispatchQueue.main)
             .sink { [weak self] transformations in
@@ -80,23 +81,18 @@ class DetailsViewController: UIViewController {
             }
             .store(in: &subscriptions)
     }
-    
+}
+
+// MARK: - Animations
+extension DetailsViewController {
     private func setupAnimations() {
-        // Animación de la imagen
-        imageView.alpha = 0
-        imageView.transform = CGAffineTransform(translationX: 0, y: 20)
-        UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseOut, animations: {
-            self.imageView.alpha = 1
-            self.imageView.transform = .identity
-        }, completion: nil)
-        
-        // Animación de la descripción
-        descriptionLabel.alpha = 0
-        UIView.animate(withDuration: 0.4, delay: 0.3, options: .curveEaseOut, animations: {
-            self.descriptionLabel.alpha = 1
-        }, completion: nil)
+        imageView.fadeInWithTranslation(yOffset: 20, duration: 0.6)
+        descriptionLabel.fadeIn(duration: 0.4, delay: 0.3)
     }
-    
+}
+
+// MARK: - CollectionView Updates
+extension DetailsViewController {
     private func updateCollectionView(transformations: [Transformation]?) {
         let hasTransformations = transformations != nil && !(transformations?.isEmpty ?? true)
         transformationsCollectionView.reloadData()
@@ -104,29 +100,18 @@ class DetailsViewController: UIViewController {
     }
     
     private func updateCollectionViewVisibility(hasTransformations: Bool) {
-        if hasTransformations {
-            transformationsCollectionView.isHidden = false
-            collectionViewHeightConstraint.constant = 250
-            self.view.layoutIfNeeded()
-            
-            transformationsCollectionView.transform = CGAffineTransform(translationX: 0, y: self.transformationsCollectionView.bounds.height)
-            
-            UIView.animate(withDuration: 0.6, delay: 0.3, options: .curveEaseOut, animations: {
-                self.transformationsCollectionView.transform = .identity
-            }, completion: nil)
-        } else {
-            // Animar el collectionView para que se desplace hacia abajo y luego ocultarlo
-            UIView.animate(withDuration: 0.6, animations: {
-                self.transformationsCollectionView.transform = CGAffineTransform(translationX: 0, y: self.transformationsCollectionView.bounds.height)
-            }, completion: { _ in
-                self.transformationsCollectionView.isHidden = true
-                self.transformationsCollectionView.transform = .identity
-                self.collectionViewHeightConstraint.constant = 0
-                self.view.layoutIfNeeded()
-            })
-        }
+        guard hasTransformations else { return } // Si no hay transformaciones, no hacemos nada
+
+        // Muestra la collectionView
+        transformationsCollectionView.isHidden = false
+        collectionViewHeightConstraint.constant = 250
+        self.view.layoutIfNeeded()
+
+        // Anima la entrada de la collectionView desde fuera de pantalla
+        transformationsCollectionView.animateFromBottom(yOffset: transformationsCollectionView.bounds.height)
     }
 }
+
 // MARK: - UICollectionViewDataSource
 extension DetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -141,7 +126,6 @@ extension DetailsViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        // Configurar celda
         cell.configure(with: transformation)
         return cell
     }
@@ -150,7 +134,6 @@ extension DetailsViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension DetailsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // Tamaño de las celdas
         let width = collectionView.frame.width / 2 - 10
         return CGSize(width: width, height: 250)
     }
