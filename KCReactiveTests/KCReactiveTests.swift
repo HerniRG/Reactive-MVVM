@@ -301,14 +301,14 @@ final class KCReactiveTests: XCTestCase {
         let viewModel = DetailsViewModel(hero: hero, transformationUseCase: useCase)
         XCTAssertNotNil(viewModel, "DetailsViewModel debería ser inicializable")
         XCTAssertEqual(viewModel.hero.name, "Goku", "El héroe debería ser 'Goku'")
-
+        
         // Cargar las transformaciones
         await viewModel.loadTransformations()
         XCTAssertNotNil(viewModel.transformations, "Las transformaciones deberían haberse cargado")
         XCTAssertEqual(viewModel.transformations?.count, 2, "Debería haber 2 transformaciones simuladas")
     }
     
-
+    
     // MARK: - Tests para DetailsViewController
     @MainActor
     func testDetailsViewControllerInitialization() throws {
@@ -317,10 +317,10 @@ final class KCReactiveTests: XCTestCase {
         
         // Crear un caso de uso simulado
         let useCase = TransformationUseCaseFake()
-
+        
         // Crear el ViewModel
         let viewModel = DetailsViewModel(hero: hero, transformationUseCase: useCase)
-
+        
         // Inicializar el ViewController
         let detailsViewController = DetailsViewController(viewModel: viewModel)
         XCTAssertNotNil(detailsViewController, "DetailsViewController debería ser inicializable")
@@ -333,7 +333,7 @@ final class KCReactiveTests: XCTestCase {
         XCTAssertNotNil(detailsViewController.value(forKey: "descriptionLabel") as? UILabel, "El UILabel debería existir")
         XCTAssertNotNil(detailsViewController.value(forKey: "transformationsCollectionView") as? UICollectionView, "El UICollectionView debería existir")
     }
-
+    
     @MainActor
     func testDetailsViewControllerBindings() async throws {
         // Crear un héroe simulado
@@ -341,18 +341,137 @@ final class KCReactiveTests: XCTestCase {
         
         // Crear un caso de uso simulado
         let useCase = TransformationUseCaseFake()
-
+        
         // Crear el ViewModel
         let viewModel = DetailsViewModel(hero: hero, transformationUseCase: useCase)
-
+        
         // Inicializar el ViewController
         let detailsViewController = DetailsViewController(viewModel: viewModel)
         detailsViewController.loadViewIfNeeded()
-
+        
         // Verificar que los datos se actualizan correctamente
         await viewModel.loadTransformations()
         let collectionView = detailsViewController.value(forKey: "transformationsCollectionView") as? UICollectionView
         XCTAssertNotNil(collectionView, "El UICollectionView debería existir")
         XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 2, "El UICollectionView debería mostrar 2 transformaciones")
+    }
+    
+    func testCellInitialization() {
+        // Cargar el nib del HeroTableViewCell
+        let nib = UINib(nibName: "HeroTableViewCell", bundle: nil)
+        let objects = nib.instantiate(withOwner: nil, options: nil)
+        let cell = objects.first as? HeroTableViewCell
+        
+        // Verificar que la celda se inicializa correctamente
+        XCTAssertNotNil(cell, "HeroTableViewCell debería ser inicializable desde el nib")
+    }
+    
+    func testCellOutletsConnection() {
+        // Cargar el nib del HeroTableViewCell
+        let nib = UINib(nibName: "HeroTableViewCell", bundle: nil)
+        let objects = nib.instantiate(withOwner: nil, options: nil)
+        let cell = objects.first as? HeroTableViewCell
+        
+        // Verificar que los outlets están conectados
+        XCTAssertNotNil(cell?.title, "El UILabel para el título debería estar conectado")
+        XCTAssertNotNil(cell?.photo, "El UIImageView para la foto debería estar conectado")
+        XCTAssertNotNil(cell?.containerView, "El UIView del contenedor debería estar conectado")
+    }
+    
+    func testUIConfiguration() {
+        // Cargar el nib del HeroTableViewCell
+        let nib = UINib(nibName: "HeroTableViewCell", bundle: nil)
+        let objects = nib.instantiate(withOwner: nil, options: nil)
+        let cell = objects.first as? HeroTableViewCell
+        
+        // Forzar la inicialización de la interfaz
+        cell?.awakeFromNib()
+        
+        // Verificar configuraciones específicas del contenedor
+        XCTAssertEqual(cell?.containerView.layer.cornerRadius, 12, "El contenedor debería tener bordes redondeados con radio de 12")
+        XCTAssertTrue(cell?.containerView.layer.masksToBounds ?? false, "El contenedor debería recortar las subcapas a los bordes")
+        XCTAssertEqual(cell?.containerView.backgroundColor, UIColor.systemGray6, "El contenedor debería tener fondo gris claro")
+        
+        // Verificar configuraciones específicas de la sombra
+        XCTAssertEqual(cell?.layer.shadowColor, UIColor.black.cgColor, "La sombra debería ser negra")
+        XCTAssertEqual(cell?.layer.shadowOpacity, 0.2, "La opacidad de la sombra debería ser 0.2")
+        XCTAssertEqual(cell?.layer.shadowOffset, CGSize(width: 0, height: 4), "El desplazamiento de la sombra debería ser (0, 4)")
+        XCTAssertEqual(cell?.layer.shadowRadius, 6, "El radio de la sombra debería ser 6")
+        XCTAssertFalse(cell?.layer.masksToBounds ?? true, "La capa principal no debería recortar las sombras")
+        
+        // Verificar configuraciones específicas del título
+        XCTAssertEqual(cell?.title.textColor, UIColor.systemGray, "El color del texto del título debería ser gris")
+    }
+    
+    // MARK: - Tests de inicialización
+    func testCollectionViewCellInitialization() {
+        // Cargar el nib de TransformationCollectionViewCell
+        let nib = UINib(nibName: "TransformationCollectionViewCell", bundle: nil)
+        let objects = nib.instantiate(withOwner: nil, options: nil)
+        let cell = objects.first as? TransformationCollectionViewCell
+        
+        // Verificar que la celda se inicializa correctamente
+        XCTAssertNotNil(cell, "TransformationCollectionViewCell debería ser inicializable desde el nib")
+    }
+    
+    // MARK: - Tests de conexiones de outlets
+    func testCollectionViewCellOutletsConnection() {
+        // Cargar el nib de TransformationCollectionViewCell
+        let nib = UINib(nibName: "TransformationCollectionViewCell", bundle: nil)
+        let objects = nib.instantiate(withOwner: nil, options: nil)
+        let cell = objects.first as? TransformationCollectionViewCell
+        
+        // Verificar que los outlets están conectados
+        XCTAssertNotNil(cell?.transformationImageView, "El UIImageView para la transformación debería estar conectado")
+        XCTAssertNotNil(cell?.transformationLabel, "El UILabel para el nombre de la transformación debería estar conectado")
+        XCTAssertNotNil(cell?.containerView, "El UIView del contenedor debería estar conectado")
+    }
+    
+    // MARK: - Tests de configuración de la interfaz
+    func testCollectionViewCellUIConfiguration() {
+        // Cargar el nib de TransformationCollectionViewCell
+        let nib = UINib(nibName: "TransformationCollectionViewCell", bundle: nil)
+        let objects = nib.instantiate(withOwner: nil, options: nil)
+        let cell = objects.first as? TransformationCollectionViewCell
+        
+        // Forzar la inicialización de la interfaz
+        cell?.awakeFromNib()
+        
+        // Verificar configuraciones específicas del contenedor
+        XCTAssertEqual(cell?.containerView.layer.cornerRadius, 12, "El contenedor debería tener bordes redondeados con radio de 12")
+        XCTAssertTrue(cell?.containerView.layer.masksToBounds ?? false, "El contenedor debería recortar las subcapas a los bordes")
+        XCTAssertEqual(cell?.containerView.backgroundColor, UIColor.systemGray6, "El contenedor debería tener fondo gris claro")
+        
+        // Verificar configuraciones específicas de la sombra
+        XCTAssertEqual(cell?.layer.shadowColor, UIColor.black.cgColor, "La sombra debería ser negra")
+        XCTAssertEqual(cell?.layer.shadowOpacity, 0.1, "La opacidad de la sombra debería ser 0.1")
+        XCTAssertEqual(cell?.layer.shadowOffset, CGSize(width: 0, height: 2), "El desplazamiento de la sombra debería ser (0, 2)")
+        XCTAssertEqual(cell?.layer.shadowRadius, 4, "El radio de la sombra debería ser 4")
+        XCTAssertFalse(cell?.layer.masksToBounds ?? true, "La capa principal no debería recortar las sombras")
+        
+        // Verificar configuraciones específicas de la imagen
+        XCTAssertTrue(cell?.transformationImageView.clipsToBounds ?? false, "La imagen debería recortar contenido fuera de los bordes")
+    }
+    
+    // MARK: - Tests de configuración de datos (para UICollectionView)
+    func testCollectionViewCellConfigurationWithTransformation() {
+        // Crear una transformación simulada
+        let transformation = Transformation(
+            id: UUID(),
+            name: "Super Saiyan",
+            description: "Primera transformación Saiyan.",
+            photo: "https://example.com/super_saiyan.jpg"
+        )
+        
+        // Cargar el nib de TransformationCollectionViewCell
+        let nib = UINib(nibName: "TransformationCollectionViewCell", bundle: nil)
+        let objects = nib.instantiate(withOwner: nil, options: nil)
+        let cell = objects.first as? TransformationCollectionViewCell
+        
+        // Configurar la celda con la transformación simulada
+        cell?.configure(with: transformation)
+        
+        // Verificar que la celda muestra los datos correctamente
+        XCTAssertEqual(cell?.transformationLabel.text, "Super Saiyan", "El label debería mostrar el nombre de la transformación")
     }
 }
