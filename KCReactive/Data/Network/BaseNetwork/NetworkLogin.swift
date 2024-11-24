@@ -90,7 +90,7 @@ final class NetworkLoginFake: NetworkLoginProtocol {
         switch scenario {
         case .success:
             // Simular un login exitoso
-            return "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJleHBpcmF0aW9uIjo2NDA5MjIxMTIwMCwiaWRlbnRpZnkiOiI0MURCRTlGNy04MzVFLTQ1RkUtOTJBMi1CMDI5NUNCN0E5QjgiLCJlbWFpbCI6Imhlcm5hbnJnODVAZ21haWwuY29tIn0.oBNMWqw0n8SBpf36ls8rFQijukSrURkzyXO2qXW6rS8"
+            return "LoginFakeSuccess"
         case .invalidCredentials:
             throw AuthenticationError.invalidCredentials
         case .serverError:

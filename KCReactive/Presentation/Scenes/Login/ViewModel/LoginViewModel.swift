@@ -27,6 +27,11 @@ final class LoginViewModel: ObservableObject {
 
     // MARK: - Métodos Públicos
 
+    /// Método público para usar la inicialización de estado en tests (auto-login)
+    func triggerAutoLogin() {
+        initializeState()
+    }
+
     /// Realiza el login del usuario.
     func login(user: String, password: String) async {
         clearUserMessage()

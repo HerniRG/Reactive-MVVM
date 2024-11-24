@@ -42,15 +42,14 @@ final class HeroService: HeroServiceProtocol {
             default:
                 throw AuthenticationError.unexpectedError
             }
-        } catch let error as AuthenticationError {
-            throw error // Mantén los errores específicos de AuthenticationError
         } catch _ as URLError {
-            throw AuthenticationError.networkError // Traduce errores de red específicos
+            throw AuthenticationError.networkError
         } catch {
-            throw AuthenticationError.unexpectedError // Captura otros errores
+            throw AuthenticationError.unexpectedError
         }
     }
 }
+
 /// `HeroServiceFake` es una clase que implementa el protocolo `HeroServiceProtocol` y permite simular diferentes respuestas al obtener héroes.
 /// Facilita las pruebas unitarias y de integración al emular escenarios específicos sin realizar llamadas reales a servicios de red.
 ///
