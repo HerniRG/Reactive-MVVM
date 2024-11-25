@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6633991A2CF4CA3400B1C954 /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663399192CF4CA3400B1C954 /* LocalizedStrings.swift */; };
 		663658D72CE73D5E000EA09D /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 663658D62CE73D5E000EA09D /* CombineCocoa */; };
 		66779B402CF3847B0052C9AA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66779B3E2CF3847B0052C9AA /* Localizable.strings */; };
 		66779B412CF3847B0052C9AA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66779B3E2CF3847B0052C9AA /* Localizable.strings */; };
@@ -72,6 +73,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		663399192CF4CA3400B1C954 /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		66779B3F2CF3847B0052C9AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		66779B422CF384CF0052C9AA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		66779B432CF384F40052C9AA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 		66813B092CEE329700D1FACE /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				663399192CF4CA3400B1C954 /* LocalizedStrings.swift */,
 				66813B1C2CEE39CC00D1FACE /* UI */,
 			);
 			path = Common;
@@ -565,6 +568,7 @@
 				66813AF32CEE31EA00D1FACE /* NetworkLogin.swift in Sources */,
 				66813B2E2CEE4BB100D1FACE /* NetworkHeroe.swift in Sources */,
 				66813AF42CEE31EA00D1FACE /* BaseNetwork.swift in Sources */,
+				6633991A2CF4CA3400B1C954 /* LocalizedStrings.swift in Sources */,
 				66813B1E2CEE411000D1FACE /* LoginUseCase.swift in Sources */,
 				66813B3D2CEE5EF300D1FACE /* HeroUseCaseProtocol.swift in Sources */,
 				66813B412CEE5F8D00D1FACE /* TransformationRepositoryProtocol.swift in Sources */,

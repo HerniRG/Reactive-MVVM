@@ -49,13 +49,13 @@ private extension LoginViewController {
         loginButton.isHidden = true
         
         // Configuración de placeholders localizables
-        userTextField.placeholder = NSLocalizedString("Email", comment: "Placeholder for email field")
-        passwordTextField.placeholder = NSLocalizedString("Password", comment: "Placeholder for password field")
+        userTextField.placeholder = LocalizedStrings.Login.email
+        passwordTextField.placeholder = LocalizedStrings.Login.password
         
         // Configuración del botón de login
         loginButton.isEnabled = false
         loginButton.layer.cornerRadius = 8
-        loginButton.setTitle(NSLocalizedString("Login", comment: "Title for login button"), for: .normal)
+        loginButton.setTitle(LocalizedStrings.Login.loginButton, for: .normal)
         
         // Indicador de carga
         loadingIndicator.startAnimating()
