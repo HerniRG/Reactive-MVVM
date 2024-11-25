@@ -28,7 +28,7 @@ private extension HeroTableViewController {
     }
     
     func setupNavigationBar() {
-        title = NSLocalizedString("Heroes", comment: "Title for the heroes screen")
+        title = LocalizedStrings.Heroes.title
         
         let logoutButton = UIBarButtonItem(
             image: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
@@ -75,7 +75,7 @@ private extension HeroTableViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] showError in
                 self?.errorLabel.isHidden = !showError
-                self?.errorLabel.text = NSLocalizedString("HeroesError", comment: "Error message for loading heroes")
+                self?.errorLabel.text = LocalizedStrings.Heroes.heroesError
                 self?.tableView.isHidden = showError
             }
             .store(in: &cancellables)
