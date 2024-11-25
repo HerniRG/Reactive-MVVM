@@ -24,7 +24,7 @@ final class HeroRepositoryFake: HeroRepositoryProtocol {
     
     private var heroService: HeroServiceProtocol
     
-    init(heroService: HeroServiceProtocol) {
+    init(heroService: HeroServiceProtocol = HeroServiceFake(scenario: .success)) {
         self.heroService = heroService
     }
     

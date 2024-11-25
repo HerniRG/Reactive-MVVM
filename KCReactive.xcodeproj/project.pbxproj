@@ -204,7 +204,6 @@
 		66813AE82CEE31EA00D1FACE /* KCReactive */ = {
 			isa = PBXGroup;
 			children = (
-				66813B2F2CEE4E3100D1FACE /* Preview Content */,
 				66813B092CEE329700D1FACE /* Common */,
 				66813B082CEE320E00D1FACE /* Presentation */,
 				66813AC62CEE31EA00D1FACE /* Domain */,
@@ -405,13 +404,6 @@
 				66813AC92CEE31EA00D1FACE /* UIImage+Extensions.swift */,
 			);
 			path = UI;
-			sourceTree = "<group>";
-		};
-		66813B2F2CEE4E3100D1FACE /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		66D1D3EE2CE678E200F546B2 = {
@@ -643,7 +635,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "KCReactive/Preview\\ Content";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 9M98K8Y584;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCReactive/Info.plist;
@@ -676,7 +668,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "KCReactive/Preview\\ Content";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 9M98K8Y584;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KCReactive/Info.plist;

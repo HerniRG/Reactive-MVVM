@@ -23,7 +23,7 @@ final class LoginRepositoryFake: LoginRepositoryProtocol {
 
     private var network: NetworkLoginProtocol
     
-    init(network: NetworkLoginProtocol) {
+    init(network: NetworkLoginProtocol = NetworkLoginFake(scenario: .success)) {
         self.network = network
     }
     

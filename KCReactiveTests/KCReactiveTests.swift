@@ -474,4 +474,151 @@ final class KCReactiveTests: XCTestCase {
         // Verificar que la celda muestra los datos correctamente
         XCTAssertEqual(cell?.transformationLabel.text, "Super Saiyan", "El label debería mostrar el nombre de la transformación")
     }
+    
+    // Test para el servicio fake con éxito
+    func testTransformationServiceFakeSuccess() async throws {
+        let service = TransformationServiceFake(scenario: .success)
+        
+        // Simular una ID válida para Goku
+        let transformations = try await service.getTransformations(id: "GokuID")
+        XCTAssertEqual(transformations.count, 2, "Debería devolver 2 transformaciones para Goku")
+        XCTAssertEqual(transformations[0].name, "Super Saiyan", "La primera transformación debería ser 'Super Saiyan'")
+    }
+    
+    // Test para el servicio fake con respuesta vacía
+    func testTransformationServiceFakeEmpty() async throws {
+        let service = TransformationServiceFake(scenario: .empty)
+        
+        // Simular una ID desconocida
+        let transformations = try await service.getTransformations(id: "UnknownID")
+        XCTAssertEqual(transformations.count, 0, "No debería devolver transformaciones para una ID desconocida")
+    }
+    
+    // MARK: - Tests para HeroTableViewController
+    
+    @MainActor
+    func testHeroTableViewControllerInitialization() throws {
+        // Crear el controlador de vista
+        let heroTableViewController = HeroTableViewController()
+        XCTAssertNotNil(heroTableViewController, "HeroTableViewController debería inicializarse correctamente")
+        
+        // Cargar la vista
+        heroTableViewController.loadViewIfNeeded()
+        
+        // Verificar que los outlets están conectados
+        XCTAssertNotNil(heroTableViewController.value(forKey: "tableView") as? UITableView, "El UITableView debería estar conectado")
+        XCTAssertNotNil(heroTableViewController.value(forKey: "loadingIndicator") as? UIActivityIndicatorView, "El UIActivityIndicatorView debería estar conectado")
+        XCTAssertNotNil(heroTableViewController.value(forKey: "errorLabel") as? UILabel, "El UILabel para errores debería estar conectado")
+    }
+    
+    
+    func testToastViewInitialization() {
+        // Crear una instancia de ToastView
+        let toast = ToastView()
+        
+        // Verificar que se inicializa correctamente
+        XCTAssertNotNil(toast, "ToastView debería inicializarse correctamente")
+        
+        // Verificar que los valores predeterminados son correctos
+        XCTAssertEqual(toast.backgroundColor, .black, "El color de fondo por defecto debería ser negro")
+        XCTAssertEqual(toast.layer.cornerRadius, 4, "ToastView debería tener esquinas redondeadas con radio 4")
+        XCTAssertTrue(toast.clipsToBounds, "ToastView debería recortar las subcapas fuera de los bordes")
+    }
+    
+    func testToastViewConfiguration() {
+        // Crear una instancia de ToastView
+        let toast = ToastView()
+        
+        // Configurar mensaje y color de fondo
+        let message = "Test Message"
+        let color = UIColor.red
+        toast.configure(message: message, backgroundColor: color)
+        
+        // Verificar configuración
+        XCTAssertEqual(toast.backgroundColor, color, "El color de fondo debería configurarse correctamente")
+    }
+    
+    func testToastViewShow() {
+        // Crear un contenedor simulado
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 568))
+        
+        // Crear una instancia de ToastView
+        let toast = ToastView()
+        
+        // Configurar y mostrar el ToastView
+        toast.configure(message: "Hello Toast", backgroundColor: .blue)
+        toast.show(in: containerView, duration: 1.0)
+        
+        // Verificar que el ToastView se agregó al contenedor
+        XCTAssertTrue(containerView.subviews.contains(toast), "ToastView debería ser añadido al contenedor")
+        
+        // Simular la animación de desaparición después del tiempo configurado
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            XCTAssertFalse(containerView.subviews.contains(toast), "ToastView debería ser eliminado del contenedor tras mostrarse")
+        }
+    }
+    
+    func testFadeInAnimation() {
+        let view = UIView()
+        view.alpha = 0
+        view.fadeIn(duration: 0.5)
+        
+        // Simula el final de la animación
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            XCTAssertEqual(view.alpha, 1, "La vista debería tener alpha 1 tras la animación de fade-in")
+        }
+    }
+    
+    func testAnimateFromBottomWithBounce() {
+        let view = UIView()
+        let initialYOffset: CGFloat = 100
+        
+        // Configurar el estado inicial
+        view.transform = CGAffineTransform(translationX: 0, y: initialYOffset)
+        XCTAssertEqual(view.transform.ty, initialYOffset, "La vista debería comenzar con un desplazamiento vertical")
+        
+        view.animateFromBottomWithBounce(yOffset: initialYOffset)
+        
+        // Simula el final de la animación
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.1) {
+            XCTAssertEqual(view.transform, .identity, "La transformación debería ser .identity tras la animación")
+        }
+    }
+    
+    func testFadeInWithTranslation() {
+        let view = UIView()
+        let initialYOffset: CGFloat = 100
+        
+        // Configurar el estado inicial
+        view.alpha = 0
+        view.transform = CGAffineTransform(translationX: 0, y: initialYOffset)
+        XCTAssertEqual(view.alpha, 0, "La vista debería comenzar con alpha 0")
+        XCTAssertEqual(view.transform.ty, initialYOffset, "La vista debería comenzar con un desplazamiento vertical")
+        
+        view.fadeInWithTranslation(yOffset: initialYOffset, duration: 0.5)
+        
+        // Simula el final de la animación
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            XCTAssertEqual(view.alpha, 1, "La vista debería tener alpha 1 tras la animación")
+            XCTAssertEqual(view.transform, .identity, "La transformación debería ser .identity tras la animación")
+        }
+    }
+    func testAnimatePressEffect() {
+        let view = UIView()
+        let expectedScale: CGFloat = 0.95
+        
+        view.animatePress(scale: expectedScale, duration: 0.1)
+        
+        // Verificar el efecto inicial
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            XCTAssertEqual(view.transform.a, expectedScale, "La escala de la vista debería reducirse a \(expectedScale)")
+            XCTAssertEqual(view.transform.d, expectedScale, "La escala de la vista debería reducirse a \(expectedScale)")
+        }
+        
+        // Verificar que vuelva al estado original
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            XCTAssertEqual(view.transform, .identity, "La transformación debería ser .identity tras la animación")
+        }
+    }
+    
 }

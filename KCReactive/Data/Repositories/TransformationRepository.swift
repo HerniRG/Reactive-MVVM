@@ -24,7 +24,7 @@ final class TransformationRepositoryFake: TransformationRepositoryProtocol {
     
     private var transformationService: TransformationServiceProtocol
     
-    init(transformationService: TransformationServiceProtocol) {
+    init(transformationService: TransformationServiceProtocol = TransformationServiceFake(scenario: .success)) {
         self.transformationService = transformationService
     }
     
