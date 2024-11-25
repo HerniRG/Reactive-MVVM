@@ -45,7 +45,6 @@
 		66813B2C2CEE470D00D1FACE /* ConstantsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B2B2CEE470300D1FACE /* ConstantsApp.swift */; };
 		66813B2E2CEE4BB100D1FACE /* NetworkHeroe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B2D2CEE4BAB00D1FACE /* NetworkHeroe.swift */; };
 		66813B332CEE4EEA00D1FACE /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B322CEE4EE000D1FACE /* LoginRepository.swift */; };
-		66813B352CEE525100D1FACE /* LoginRepositoryFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B342CEE524300D1FACE /* LoginRepositoryFake.swift */; };
 		66813B372CEE5C3600D1FACE /* NetworkTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B362CEE5C2C00D1FACE /* NetworkTransformation.swift */; };
 		66813B392CEE5D3C00D1FACE /* HeroRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B382CEE5D3300D1FACE /* HeroRepository.swift */; };
 		66813B3B2CEE5D5600D1FACE /* TransformationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B3A2CEE5D4A00D1FACE /* TransformationRepository.swift */; };
@@ -55,8 +54,6 @@
 		66813B432CEE5F9B00D1FACE /* TransformationUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B422CEE5F9A00D1FACE /* TransformationUseCaseProtocol.swift */; };
 		66813B452CEE600700D1FACE /* HeroUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B442CEE600700D1FACE /* HeroUseCase.swift */; };
 		66813B472CEE603100D1FACE /* TransformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B462CEE603100D1FACE /* TransformationUseCase.swift */; };
-		66813B492CEE638900D1FACE /* HeroRepositoryFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B482CEE638900D1FACE /* HeroRepositoryFake.swift */; };
-		66813B4B2CEE639E00D1FACE /* TransformationRepositoryFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813B4A2CEE639E00D1FACE /* TransformationRepositoryFake.swift */; };
 		66C8828A2CF324D600626D35 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C882892CF324C400626D35 /* UIView+Extensions.swift */; };
 		66C8828C2CF3263000626D35 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8828B2CF3263000626D35 /* KeyboardManager.swift */; };
 		66D1D4352CE67AFE00F546B2 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 66D1D4342CE67AFE00F546B2 /* KeychainSwift */; };
@@ -112,7 +109,6 @@
 		66813B2B2CEE470300D1FACE /* ConstantsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsApp.swift; sourceTree = "<group>"; };
 		66813B2D2CEE4BAB00D1FACE /* NetworkHeroe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHeroe.swift; sourceTree = "<group>"; };
 		66813B322CEE4EE000D1FACE /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
-		66813B342CEE524300D1FACE /* LoginRepositoryFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepositoryFake.swift; sourceTree = "<group>"; };
 		66813B362CEE5C2C00D1FACE /* NetworkTransformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTransformation.swift; sourceTree = "<group>"; };
 		66813B382CEE5D3300D1FACE /* HeroRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroRepository.swift; sourceTree = "<group>"; };
 		66813B3A2CEE5D4A00D1FACE /* TransformationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationRepository.swift; sourceTree = "<group>"; };
@@ -122,8 +118,6 @@
 		66813B422CEE5F9A00D1FACE /* TransformationUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationUseCaseProtocol.swift; sourceTree = "<group>"; };
 		66813B442CEE600700D1FACE /* HeroUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroUseCase.swift; sourceTree = "<group>"; };
 		66813B462CEE603100D1FACE /* TransformationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationUseCase.swift; sourceTree = "<group>"; };
-		66813B482CEE638900D1FACE /* HeroRepositoryFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroRepositoryFake.swift; sourceTree = "<group>"; };
-		66813B4A2CEE639E00D1FACE /* TransformationRepositoryFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationRepositoryFake.swift; sourceTree = "<group>"; };
 		66C882892CF324C400626D35 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		66C8828B2CF3263000626D35 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		66D1D3F72CE678E200F546B2 /* KCReactive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KCReactive.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -416,9 +410,6 @@
 		66813B2F2CEE4E3100D1FACE /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				66813B342CEE524300D1FACE /* LoginRepositoryFake.swift */,
-				66813B482CEE638900D1FACE /* HeroRepositoryFake.swift */,
-				66813B4A2CEE639E00D1FACE /* TransformationRepositoryFake.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -576,13 +567,10 @@
 				66813B2A2CEE43EB00D1FACE /* HTTPMethods.swift in Sources */,
 				66813AF72CEE31EA00D1FACE /* Hero.swift in Sources */,
 				66813AF82CEE31EA00D1FACE /* KeyChain.swift in Sources */,
-				66813B4B2CEE639E00D1FACE /* TransformationRepositoryFake.swift in Sources */,
 				66813B332CEE4EEA00D1FACE /* LoginRepository.swift in Sources */,
 				66813AF92CEE31EA00D1FACE /* Transformation.swift in Sources */,
 				66813B2C2CEE470D00D1FACE /* ConstantsApp.swift in Sources */,
 				66813AFB2CEE31EA00D1FACE /* ToastView.swift in Sources */,
-				66813B492CEE638900D1FACE /* HeroRepositoryFake.swift in Sources */,
-				66813B352CEE525100D1FACE /* LoginRepositoryFake.swift in Sources */,
 				66813B452CEE600700D1FACE /* HeroUseCase.swift in Sources */,
 				66813AFC2CEE31EA00D1FACE /* UIImage+Extensions.swift in Sources */,
 				66813B3F2CEE5F0800D1FACE /* HeroRepositoryProtocol.swift in Sources */,

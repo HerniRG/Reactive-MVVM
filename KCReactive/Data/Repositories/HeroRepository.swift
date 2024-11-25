@@ -19,3 +19,16 @@ final class DefaultHeroRepository: HeroRepositoryProtocol {
         return try await heroService.getHeroes(filter: filter)
     }
 }
+
+final class HeroRepositoryFake: HeroRepositoryProtocol {
+    
+    private var heroService: HeroServiceProtocol
+    
+    init(heroService: HeroServiceProtocol) {
+        self.heroService = heroService
+    }
+    
+    func getHeroes(filter: String) async throws -> [Hero] {
+        return try await heroService.getHeroes(filter: filter)
+    }
+}

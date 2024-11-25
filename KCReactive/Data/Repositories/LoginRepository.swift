@@ -19,3 +19,15 @@ final class DefaultLoginRepository: LoginRepositoryProtocol {
     }
 }
 
+final class LoginRepositoryFake: LoginRepositoryProtocol {
+
+    private var network: NetworkLoginProtocol
+    
+    init(network: NetworkLoginProtocol) {
+        self.network = network
+    }
+    
+    func login(user: String, password: String) async throws -> String {
+        return try await network.loginApp(user: user, password: password)
+    }
+}

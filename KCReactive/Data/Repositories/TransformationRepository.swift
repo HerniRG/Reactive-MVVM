@@ -19,3 +19,16 @@ final class DefaultTransformationRepository: TransformationRepositoryProtocol {
         return try await transformationService.getTransformations(id: id)
     }
 }
+
+final class TransformationRepositoryFake: TransformationRepositoryProtocol {
+    
+    private var transformationService: TransformationServiceProtocol
+    
+    init(transformationService: TransformationServiceProtocol) {
+        self.transformationService = transformationService
+    }
+    
+    func getTransformations(id: String) async throws -> [Transformation] {
+        return try await transformationService.getTransformations(id: id)
+    }
+}
