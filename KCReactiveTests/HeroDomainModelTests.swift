@@ -11,7 +11,7 @@ import XCTest
 final class HeroDomainModelTests: XCTestCase {
     
     func testHeroDomainModel() {
-        let hero = Hero(id: UUID(), name: "Goku", description: "El Saiyan más poderoso.", photo: "url", favorite: true, transformations: nil)
+        let hero = Hero(id: UUID(), name: "Goku", description: "El Saiyan más poderoso.", photo: "url", favorite: true)
         XCTAssertNotNil(hero, "El modelo de Hero debería ser inicializable")
         XCTAssertEqual(hero.name, "Goku", "El nombre del héroe debería ser 'Goku'")
         XCTAssertTrue((hero.favorite != nil), "El héroe debería estar marcado como favorito")

@@ -11,16 +11,14 @@ import Combine
 
 final class HeroTableViewTests: XCTestCase {
     
-    @MainActor
     func testHeroViewModel() async throws {
         let viewModel = HeroesViewModel(heroUseCase: HeroUseCaseFake())
         XCTAssertNotNil(viewModel, "El HeroesViewModel debería ser inicializable")
         
         await viewModel.loadHeroes()
-        XCTAssertEqual(viewModel.heroes.count, 2, "Debería haber 2 héroes en el caso simulado")
+        XCTAssertEqual(viewModel.heroes.count, 3, "Debería haber 3 héroes en el caso simulado")
     }
     
-    @MainActor
     func testHeroesCombine() async throws {
         // Crear un Set para los suscriptores de Combine
         var subscriptions = Set<AnyCancellable>()
@@ -35,7 +33,7 @@ final class HeroTableViewTests: XCTestCase {
         // Suscribirse al publisher de héroes en el ViewModel
         viewModel.$heroes
             .sink { heroes in
-                if heroes.count == 2 {
+                if heroes.count == 3 {
                     expectation.fulfill()
                 }
             }
@@ -48,16 +46,14 @@ final class HeroTableViewTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 5)
     }
     
-    @MainActor
     func testViewModelInitialization() async throws {
         let viewModel = HeroesViewModel(heroUseCase: HeroUseCaseFake())
         XCTAssertNotNil(viewModel, "HeroesViewModel debería ser inicializable")
         
         await viewModel.loadHeroes()
-        XCTAssertEqual(viewModel.heroes.count, 2, "Debería haber 2 héroes simulados")
+        XCTAssertEqual(viewModel.heroes.count, 3, "Debería haber 3 héroes simulados")
     }
     
-    @MainActor
     func testViewModelEmptyHeroes() async throws {
         let viewModel = HeroesViewModel(heroUseCase: HeroUseCaseFake())
         XCTAssertNotNil(viewModel, "HeroesViewModel debería ser inicializable")
@@ -66,7 +62,6 @@ final class HeroTableViewTests: XCTestCase {
         XCTAssertEqual(viewModel.heroes.count, 0, "No debería haber héroes con un filtro que no coincide")
     }
     
-    @MainActor
     func testViewModelLogout() {
         let viewModel = HeroesViewModel(heroUseCase: HeroUseCaseFake())
         XCTAssertNotNil(viewModel, "HeroesViewModel debería ser inicializable")
@@ -75,7 +70,6 @@ final class HeroTableViewTests: XCTestCase {
         XCTAssertNil(TokenManager.shared.loadToken(), "El token debería eliminarse tras el logout")
     }
     
-    @MainActor
     func testHeroTableViewControllerInitialization() throws {
         // Crear el controlador de vista
         let heroTableViewController = HeroTableViewController()

@@ -14,6 +14,9 @@ final class LoginTests: XCTestCase {
     func testLoginFake() async throws {
         let KC = TokenManager()
         XCTAssertNotNil(KC, "TokenManager debería inicializarse correctamente")
+
+        KC.deleteToken() // Asegúrate de que no haya tokens persistentes al inicio.
+        XCTAssertNil(KC.loadToken(), "El token debería ser nil al inicio de la prueba")
         
         // Crear instancia del caso de uso simulado
         let obj = LoginUseCaseFake()
@@ -77,7 +80,6 @@ final class LoginTests: XCTestCase {
         XCTAssertNil(jwt, "El token debería ser nil después del logout")
     }
     
-    @MainActor
     func testLoginAutoLoginAsincrono() throws {
         var subscriptions = Set<AnyCancellable>()
         let expectation = self.expectation(description: "Estado de login automático")

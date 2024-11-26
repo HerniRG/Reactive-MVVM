@@ -23,8 +23,18 @@ final class LoginViewController: UIViewController {
     private var password: String = ""
     private let passwordToggleButton = UIButton(type: .custom)
     private var keyboardManager: KeyboardManager?
-    private let viewModel = LoginViewModel()
+    private var viewModel = LoginViewModel()
     private var subscriptions = Set<AnyCancellable>()
+    
+    // MARK: - Initializer
+    init(viewModel: LoginViewModel = LoginViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: String(describing: LoginViewController.self), bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -196,7 +206,7 @@ private extension LoginViewController {
     }
     
     func navigateToHeroes() {
-        let heroesVC = HeroTableViewController(nibName: "HeroTableViewController", bundle: nil)
+        let heroesVC = HeroTableViewController()
         guard let navigationController = navigationController else {
             print("NavigationController no disponible")
             return

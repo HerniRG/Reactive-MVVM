@@ -8,7 +8,6 @@
 import Combine
 import Foundation
 
-@MainActor
 final class DetailsViewModel: ObservableObject {
 
     // MARK: - Propiedades Publicadas

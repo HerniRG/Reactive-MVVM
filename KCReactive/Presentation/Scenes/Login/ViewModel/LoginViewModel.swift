@@ -9,7 +9,6 @@ enum State {
 }
 
 // MARK: - ViewModel del Login
-@MainActor
 final class LoginViewModel: ObservableObject {
     
     // MARK: - Publicación de Propiedades
@@ -104,7 +103,7 @@ private extension LoginViewModel {
 }
 
 // MARK: - Gestión de Errores
-private extension LoginViewModel {
+extension LoginViewModel {
     /// Maneja los errores ocurridos durante el login.
     func handleLoginError(_ error: Error) {
         let message: String

@@ -12,10 +12,9 @@ final class DetailsTests: XCTestCase {
 
     // MARK: - Tests para DetailsViewModel
     
-    @MainActor
     func testDetailsViewModelInitialization() async throws {
         // Crear un héroe simulado
-        let hero = Hero(id: UUID(), name: "Goku", description: "El Saiyan más poderoso.", photo: "https://example.com/goku.jpg", favorite: true, transformations: nil)
+        let hero = Hero(id: UUID(), name: "Goku", description: "El Saiyan más poderoso.", photo: "https://example.com/goku.jpg", favorite: true)
         
         // Crear un caso de uso simulado
         let useCase = TransformationUseCaseFake()
@@ -33,10 +32,9 @@ final class DetailsTests: XCTestCase {
 
     // MARK: - Tests para DetailsViewController
 
-    @MainActor
     func testDetailsViewControllerInitialization() throws {
         // Crear un héroe simulado
-        let hero = Hero(id: UUID(), name: "Goku", description: "El Saiyan más poderoso.", photo: "https://example.com/goku.jpg", favorite: true, transformations: nil)
+        let hero = Hero(id: UUID(), name: "Goku", description: "El Saiyan más poderoso.", photo: "https://example.com/goku.jpg", favorite: true)
         
         // Crear un caso de uso simulado
         let useCase = TransformationUseCaseFake()

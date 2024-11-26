@@ -9,7 +9,6 @@ import Combine
 import Foundation
 
 // MARK: - ViewModel para la Lista de Héroes
-@MainActor
 final class HeroesViewModel: ObservableObject {
 
     // MARK: - Propiedades Publicadas

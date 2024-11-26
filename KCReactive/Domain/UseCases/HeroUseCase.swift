@@ -16,13 +16,22 @@ final class HeroUseCase: HeroUseCaseProtocol {
     }
     
     /// Obtiene la lista de héroes, opcionalmente filtrados por nombre.
+    /// Ordena los héroes antes de devolverlos.
     func getHeroes(filter: String) async throws -> [Hero] {
-        return try await heroRepo.getHeroes(filter: filter)
+        let heroes = try await heroRepo.getHeroes(filter: filter)
+        return sortHeroes(heroes)
     }
     
     /// Elimina el token almacenado, realizando el logout del usuario.
     func logout() {
         TokenManager.shared.deleteToken()
+    }
+    
+    /// Ordena los héroes alfabéticamente por nombre.
+    /// - Parameter heroes: Lista de héroes a ordenar.
+    /// - Returns: Lista de héroes ordenados.
+    private func sortHeroes(_ heroes: [Hero]) -> [Hero] {
+        return heroes.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }
 }
 
@@ -42,7 +51,6 @@ final class HeroUseCase: HeroUseCaseProtocol {
 
 final class HeroUseCaseFake: HeroUseCaseProtocol {
     
-    /// Repositorio ficticio requerido por el protocolo
     var heroRepo: any HeroRepositoryProtocol
     
     /// Lista de héroes simulados.
@@ -52,33 +60,41 @@ final class HeroUseCaseFake: HeroUseCaseProtocol {
             name: "Goku",
             description: "El Saiyan más poderoso.",
             photo: "https://example.com/goku.jpg",
-            favorite: true,
-            transformations: nil
+            favorite: true
         ),
         Hero(
             id: UUID(),
             name: "Vegeta",
             description: "El príncipe de los Saiyans.",
             photo: "https://example.com/vegeta.jpg",
-            favorite: false,
-            transformations: nil
+            favorite: false
+        ),
+        Hero(
+            id: UUID(),
+            name: "Piccolo",
+            description: "El namekiano más poderoso.",
+            photo: "https://example.com/piccolo.jpg",
+            favorite: false
         )
     ]
     
-    /// Inicializador que acepta un repositorio ficticio opcional.
     init(heroRepo: any HeroRepositoryProtocol = DefaultHeroRepository(heroService: HeroService())) {
         self.heroRepo = heroRepo
     }
     
-    /// Simula la obtención de héroes, devolviendo dos héroes predefinidos.
+    /// Simula la obtención de héroes, devolviendo héroes ordenados.
     func getHeroes(filter: String) async throws -> [Hero] {
-        if filter.isEmpty {
-            return fakeHeroes
-        }
-        return fakeHeroes.filter { $0.name.localizedCaseInsensitiveContains(filter) }
+        let filteredHeroes = filter.isEmpty
+            ? fakeHeroes
+            : fakeHeroes.filter { $0.name.localizedCaseInsensitiveContains(filter) }
+        return sortHeroes(filteredHeroes)
     }
     
-    /// Simula el proceso de logout, eliminando el token.
+    /// Ordena los héroes alfabéticamente por nombre.
+    private func sortHeroes(_ heroes: [Hero]) -> [Hero] {
+        return heroes.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+    }
+    
     func logout() {
         print("Fake logout executed")
     }

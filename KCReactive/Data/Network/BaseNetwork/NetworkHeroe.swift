@@ -88,29 +88,21 @@ final class HeroServiceFake: HeroServiceProtocol {
                     name: "Goku",
                     description: "El Saiyan más poderoso.",
                     photo: "https://example.com/goku.jpg",
-                    favorite: true,
-                    transformations: [
-                        Transformation(id: UUID(), name: "Super Saiyan", description: "Primera transformación Saiyan", photo: "https://example.com/super_saiyan.jpg"),
-                        Transformation(id: UUID(), name: "Ultra Instinct", description: "La transformación definitiva", photo: "https://example.com/ultra_instinct.jpg")
-                    ]
+                    favorite: true
                 ),
                 Hero(
                     id: UUID(),
                     name: "Vegeta",
                     description: "El príncipe de los Saiyans.",
                     photo: "https://example.com/vegeta.jpg",
-                    favorite: false,
-                    transformations: [
-                        Transformation(id: UUID(), name: "Super Saiyan Blue", description: "Transformación poderosa", photo: "https://example.com/super_saiyan_blue.jpg")
-                    ]
+                    favorite: false
                 ),
                 Hero(
                     id: UUID(),
                     name: "Piccolo",
                     description: "El poderoso guerrero Namekiano.",
                     photo: "https://example.com/piccolo.jpg",
-                    favorite: false,
-                    transformations: nil
+                    favorite: false
                 )
             ]
             

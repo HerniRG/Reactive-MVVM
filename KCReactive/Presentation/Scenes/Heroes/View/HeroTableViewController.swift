@@ -12,6 +12,16 @@ class HeroTableViewController: UIViewController {
     private var viewModel = HeroesViewModel()
     private var cancellables = Set<AnyCancellable>()
     
+    // MARK: - Initializer
+    init(viewModel: HeroesViewModel = HeroesViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: String(describing: HeroTableViewController.self), bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()

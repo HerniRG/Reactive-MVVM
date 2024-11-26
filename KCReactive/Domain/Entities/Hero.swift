@@ -13,7 +13,6 @@ struct Hero: Codable, Identifiable, Hashable {
     var description: String
     var photo: String
     var favorite: Bool?
-    var transformations: [Transformation]?
 }
 
 struct HeroFilter: Codable {

@@ -17,4 +17,3 @@ struct Transformation: Codable, Hashable {
 struct TransformationFilter: Codable {
     var id: String 
 }
-

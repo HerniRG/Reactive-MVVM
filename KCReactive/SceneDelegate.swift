@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Crear y asignar la ventana principal
         let window = UIWindow(windowScene: windowScene)
-        let loginVC = LoginViewController(nibName: "LoginViewController", bundle: nil)
+        let loginVC = LoginViewController()
         let navController = UINavigationController(rootViewController: loginVC)
         
         window.rootViewController = navController
