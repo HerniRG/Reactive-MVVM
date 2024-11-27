@@ -11,6 +11,7 @@ class HeroTableViewCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var starImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,6 +23,8 @@ class HeroTableViewCell: UITableViewCell {
         containerView.layer.cornerRadius = 12
         containerView.layer.masksToBounds = true
         containerView.backgroundColor = UIColor.systemGray6
+        containerView.layer.borderColor = UIColor.black.cgColor
+        containerView.layer.borderWidth = 0.2
         
         // Añadir sombra al containerView
         layer.shadowColor = UIColor.black.cgColor

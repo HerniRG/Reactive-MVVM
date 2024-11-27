@@ -45,6 +45,7 @@ extension DetailsViewController {
         self.title = viewModel.hero.name
         setupImageView()
         setupDescriptionLabel()
+        setupFavoriteImage()
         setupCollectionView()
     }
     
@@ -61,6 +62,24 @@ extension DetailsViewController {
     
     private func setupDescriptionLabel() {
         descriptionLabel.text = viewModel.hero.description
+    }
+    
+    private func setupFavoriteImage() {
+        // Configura la imagen según el estado de `hero.favorite`
+        let favoriteImageName = viewModel.hero.favorite ?? false ? "star.fill" : "star"
+        let favoriteImage = UIImage(systemName: favoriteImageName)
+        
+        // Crea un UIImageView con la imagen
+        let favoriteImageView = UIImageView(image: favoriteImage)
+        favoriteImageView.contentMode = .scaleAspectFit
+        favoriteImageView.tintColor = .systemYellow // Color de la estrella
+        favoriteImageView.frame = CGRect(x: 0, y: 0, width: 24, height: 24) // Ajustar tamaño si es necesario
+
+        // Crea un UIBarButtonItem con el UIImageView como customView
+        let barButtonItem = UIBarButtonItem(customView: favoriteImageView)
+        
+        // Añade la imagen al lado derecho del UINavigationBar
+        navigationItem.rightBarButtonItem = barButtonItem
     }
     
     private func setupCollectionView() {

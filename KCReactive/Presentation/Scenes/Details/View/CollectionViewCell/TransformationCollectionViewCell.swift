@@ -23,6 +23,8 @@ class TransformationCollectionViewCell: UICollectionViewCell {
         containerView.layer.cornerRadius = 12
         containerView.layer.masksToBounds = true
         containerView.backgroundColor = UIColor.systemGray6
+        containerView.layer.borderColor = UIColor.black.cgColor
+        containerView.layer.borderWidth = 0.2
 
         // Añadir sombra al containerView
         layer.shadowColor = UIColor.black.cgColor
