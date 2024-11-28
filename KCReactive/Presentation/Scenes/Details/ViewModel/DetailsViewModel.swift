@@ -9,9 +9,9 @@ import Combine
 import Foundation
 
 final class DetailsViewModel: ObservableObject {
-
     // MARK: - Propiedades Publicadas
     @Published var transformations: [Transformation]? = nil
+    @Published var isFavorite: Bool
 
     // MARK: - Propiedades Públicas
     let hero: Hero
@@ -26,6 +26,7 @@ final class DetailsViewModel: ObservableObject {
     ) {
         self.hero = hero
         self.transformationUseCase = transformationUseCase
+        self.isFavorite = hero.favorite ?? false // Inicializamos con el estado del héroe
         
         Task {
             await loadTransformations()
@@ -33,14 +34,15 @@ final class DetailsViewModel: ObservableObject {
     }
 
     // MARK: - Métodos Públicos
-    /// Carga las transformaciones asociadas al héroe.
+    func toggleFavorite() {
+        isFavorite.toggle() // es solo para un manejo visual, no lo persistimos o llamamos a la api.
+    }
+
     func loadTransformations() async {
         do {
-            // Obtener las transformaciones procesadas mediante el caso de uso
             let fetchedTransformations = try await transformationUseCase.getTransformations(id: hero.id.uuidString)
             self.transformations = fetchedTransformations.isEmpty ? nil : fetchedTransformations
         } catch {
-            // En caso de error, asignar nil a las transformaciones
             self.transformations = nil
         }
     }

@@ -65,21 +65,54 @@ extension DetailsViewController {
     }
     
     private func setupFavoriteImage() {
-        // Configura la imagen según el estado de `hero.favorite`
-        let favoriteImageName = viewModel.hero.favorite ?? false ? "star.fill" : "star"
-        let favoriteImage = UIImage(systemName: favoriteImageName)
+        // Crear el botón personalizado con una imagen dentro de un círculo
+        let favoriteButton = UIButton(type: .custom)
+        updateFavoriteButtonAppearance(favoriteButton) // Configura el estado inicial
         
-        // Crea un UIImageView con la imagen
-        let favoriteImageView = UIImageView(image: favoriteImage)
-        favoriteImageView.contentMode = .scaleAspectFit
-        favoriteImageView.tintColor = .systemYellow // Color de la estrella
-        favoriteImageView.frame = CGRect(x: 0, y: 0, width: 24, height: 24) // Ajustar tamaño si es necesario
-
-        // Crea un UIBarButtonItem con el UIImageView como customView
-        let barButtonItem = UIBarButtonItem(customView: favoriteImageView)
+        // Añadir acción al botón
+        favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
         
-        // Añade la imagen al lado derecho del UINavigationBar
+        // Configurar como UIBarButtonItem
+        let barButtonItem = UIBarButtonItem(customView: favoriteButton)
         navigationItem.rightBarButtonItem = barButtonItem
+        
+        // Vincular con cambios en el ViewModel
+        viewModel.$isFavorite
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateFavoriteButtonAppearance(favoriteButton)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func updateFavoriteButtonAppearance(_ button: UIButton) {
+        // Configura el fondo y la imagen según el estado de favorito
+        if viewModel.isFavorite {
+            button.backgroundColor = UIColor.systemOrange
+            button.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        } else {
+            button.backgroundColor = UIColor.systemGray6
+            button.setImage(UIImage(systemName: "star"), for: .normal)
+        }
+
+        // Configura el botón circular
+        button.layer.cornerRadius = 24
+        button.layer.masksToBounds = true
+        button.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
+
+        // Configura el borde fino
+        button.layer.borderColor = UIColor.systemYellow.cgColor
+        button.layer.borderWidth = 0.2
+
+        // Configura el tinte de la imagen
+        button.tintColor = .systemYellow
+
+        // Añade la animación fadeIn al botón
+        button.fadeIn(duration: 0.3) // Ajusta la duración según prefieras
+    }
+
+    @objc private func didTapFavoriteButton() {
+        viewModel.toggleFavorite()
     }
     
     private func setupCollectionView() {
