@@ -17,7 +17,7 @@ class HeroTableViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: String(describing: HeroTableViewController.self), bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -126,14 +126,22 @@ extension HeroTableViewController: UITableViewDataSource {
         viewModel.heroes.count
     }
     
+    // HeroTableViewController.swift
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? HeroTableViewCell else {
             return UITableViewCell()
         }
         
+        // Reset the cell's state
+        cell.photo.image = UIImage(named: "person")
+        cell.title.text = nil
+        
         let hero = viewModel.heroes[indexPath.row]
         cell.title.text = hero.name
+        
         if let url = URL(string: hero.photo) {
+            cell.photo.accessibilityIdentifier = hero.id.uuidString
             cell.photo.loadImageRemote(url: url)
         }
         

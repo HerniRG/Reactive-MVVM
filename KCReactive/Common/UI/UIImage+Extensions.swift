@@ -1,40 +1,41 @@
-//
-//  UIImage+Extensions.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 15/11/24.
-//
+// UIImage+Extensions.swift
 
-import Foundation
 import UIKit
 
 extension UIImageView {
     func loadImageRemote(url: URL) {
         let placeholderImage = UIImage(named: "person")
         
-        // Asignar el placeholder de inmediato para limpiar cualquier imagen previa
+        // Assign the placeholder image
         DispatchQueue.main.async {
             self.image = placeholderImage
         }
         
-        // Cargar la imagen de forma asíncrona
+        // Capture the current accessibilityIdentifier
+        let currentIdentifier = self.accessibilityIdentifier
+        
+        // Load the image asynchronously
         DispatchQueue.global().async { [weak self] in
             guard let data = try? Data(contentsOf: url),
                   let image = UIImage(data: data) else {
                 return
             }
             
-            DispatchQueue.main.async {
-                // Usar fade-in al asignar la nueva imagen
-                UIView.transition(
-                    with: self!,
-                    duration: 0.3,
-                    options: .transitionCrossDissolve,
-                    animations: {
-                        self?.image = image
-                    },
-                    completion: nil
-                )
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                // Check if the accessibilityIdentifier hasn't changed
+                if self.accessibilityIdentifier == currentIdentifier {
+                    // Use fade-in animation when assigning the new image
+                    UIView.transition(
+                        with: self,
+                        duration: 0.3,
+                        options: .transitionCrossDissolve,
+                        animations: {
+                            self.image = image
+                        },
+                        completion: nil
+                    )
+                }
             }
         }
     }
