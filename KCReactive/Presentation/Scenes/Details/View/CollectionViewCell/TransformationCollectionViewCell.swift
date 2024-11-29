@@ -6,18 +6,19 @@
 //
 
 import UIKit
+import Kingfisher
 
 class TransformationCollectionViewCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var transformationImageView: UIImageView!
     @IBOutlet weak var transformationLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
     }
-
+    
     private func setupUI() {
         // Configuración del containerView
         containerView.layer.cornerRadius = 12
@@ -25,7 +26,7 @@ class TransformationCollectionViewCell: UICollectionViewCell {
         containerView.backgroundColor = UIColor.systemGray6
         containerView.layer.borderColor = UIColor.black.cgColor
         containerView.layer.borderWidth = 0.2
-
+        
         // Añadir sombra al containerView
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.1
@@ -33,7 +34,7 @@ class TransformationCollectionViewCell: UICollectionViewCell {
         layer.shadowRadius = 4
         layer.masksToBounds = false
         backgroundColor = .clear
-
+        
         // Configuración de la imagen con bordes redondeados selectivos
         let maskPath = UIBezierPath(
             roundedRect: transformationImageView.bounds,
@@ -43,7 +44,7 @@ class TransformationCollectionViewCell: UICollectionViewCell {
         let shape = CAShapeLayer()
         shape.path = maskPath.cgPath
         transformationImageView.layer.mask = shape
-
+        
         // Añadir borde a la imagen
         let borderLayer = CAShapeLayer()
         borderLayer.path = maskPath.cgPath
@@ -52,14 +53,21 @@ class TransformationCollectionViewCell: UICollectionViewCell {
         borderLayer.fillColor = UIColor.clear.cgColor
         borderLayer.frame = transformationImageView.bounds
         transformationImageView.layer.addSublayer(borderLayer)
-
+        
         transformationImageView.clipsToBounds = true
     }
-
+    
     func configure(with transformation: Transformation) {
         transformationLabel.text = transformation.name
         if let url = URL(string: transformation.photo) {
-            transformationImageView.loadImageRemote(url: url)
+            transformationImageView.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "person"),
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ]
+            )
         }
     }
 }

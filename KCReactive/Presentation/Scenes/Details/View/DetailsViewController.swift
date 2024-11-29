@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import Kingfisher
 
 class DetailsViewController: UIViewController {
     
@@ -56,7 +57,14 @@ extension DetailsViewController {
         imageView.layer.borderColor = UIColor.systemGray4.cgColor
         
         if let url = URL(string: viewModel.hero.photo) {
-            self.imageView.loadImageRemote(url: url)
+            self.imageView.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "person"),
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ]
+            )
         }
     }
     
@@ -96,9 +104,9 @@ extension DetailsViewController {
         }
 
         // Configura el botón circular
-        button.layer.cornerRadius = 24
+        button.layer.cornerRadius = 18
         button.layer.masksToBounds = true
-        button.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
+        button.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
 
         // Configura el borde fino
         button.layer.borderColor = UIColor.systemYellow.cgColor

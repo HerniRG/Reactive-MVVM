@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6633991A2CF4CA3400B1C954 /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663399192CF4CA3400B1C954 /* LocalizedStrings.swift */; };
 		663658D72CE73D5E000EA09D /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 663658D62CE73D5E000EA09D /* CombineCocoa */; };
+		666078282CFA5F59003BCADA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 666078272CFA5F59003BCADA /* Kingfisher */; };
 		66779B402CF3847B0052C9AA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66779B3E2CF3847B0052C9AA /* Localizable.strings */; };
 		66779B412CF3847B0052C9AA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66779B3E2CF3847B0052C9AA /* Localizable.strings */; };
 		66813AE92CEE31EA00D1FACE /* TransformationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66813AD02CEE31EA00D1FACE /* TransformationCollectionViewCell.xib */; };
@@ -26,7 +27,6 @@
 		66813AF82CEE31EA00D1FACE /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AC32CEE31EA00D1FACE /* KeyChain.swift */; };
 		66813AF92CEE31EA00D1FACE /* Transformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AC42CEE31EA00D1FACE /* Transformation.swift */; };
 		66813AFB2CEE31EA00D1FACE /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AC82CEE31EA00D1FACE /* ToastView.swift */; };
-		66813AFC2CEE31EA00D1FACE /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813AC92CEE31EA00D1FACE /* UIImage+Extensions.swift */; };
 		66813AFD2CEE31EA00D1FACE /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ACB2CEE31EA00D1FACE /* DetailsViewModel.swift */; };
 		66813AFE2CEE31EA00D1FACE /* HeroesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ACC2CEE31EA00D1FACE /* HeroesViewModel.swift */; };
 		66813AFF2CEE31EA00D1FACE /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66813ACD2CEE31EA00D1FACE /* LoginViewModel.swift */; };
@@ -82,7 +82,6 @@
 		66813AC32CEE31EA00D1FACE /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		66813AC42CEE31EA00D1FACE /* Transformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformation.swift; sourceTree = "<group>"; };
 		66813AC82CEE31EA00D1FACE /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
-		66813AC92CEE31EA00D1FACE /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		66813ACB2CEE31EA00D1FACE /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		66813ACC2CEE31EA00D1FACE /* HeroesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroesViewModel.swift; sourceTree = "<group>"; };
 		66813ACD2CEE31EA00D1FACE /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -137,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				666078282CFA5F59003BCADA /* Kingfisher in Frameworks */,
 				663658D72CE73D5E000EA09D /* CombineCocoa in Frameworks */,
 				66D1D4352CE67AFE00F546B2 /* KeychainSwift in Frameworks */,
 			);
@@ -401,7 +401,6 @@
 				66C8828B2CF3263000626D35 /* KeyboardManager.swift */,
 				66C882892CF324C400626D35 /* UIView+Extensions.swift */,
 				66813AC82CEE31EA00D1FACE /* ToastView.swift */,
-				66813AC92CEE31EA00D1FACE /* UIImage+Extensions.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -444,6 +443,7 @@
 			packageProductDependencies = (
 				66D1D4342CE67AFE00F546B2 /* KeychainSwift */,
 				663658D62CE73D5E000EA09D /* CombineCocoa */,
+				666078272CFA5F59003BCADA /* Kingfisher */,
 			);
 			productName = KCReactive;
 			productReference = 66D1D3F72CE678E200F546B2 /* KCReactive.app */;
@@ -504,6 +504,7 @@
 			packageReferences = (
 				66D1D42B2CE6794900F546B2 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 				66D1D42C2CE6799300F546B2 /* XCRemoteSwiftPackageReference "keychain-swift" */,
+				666078262CFA5F59003BCADA /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66D1D3F82CE678E200F546B2 /* Products */;
@@ -564,7 +565,6 @@
 				66813B2C2CEE470D00D1FACE /* ConstantsApp.swift in Sources */,
 				66813AFB2CEE31EA00D1FACE /* ToastView.swift in Sources */,
 				66813B452CEE600700D1FACE /* HeroUseCase.swift in Sources */,
-				66813AFC2CEE31EA00D1FACE /* UIImage+Extensions.swift in Sources */,
 				66813B3F2CEE5F0800D1FACE /* HeroRepositoryProtocol.swift in Sources */,
 				66813AFD2CEE31EA00D1FACE /* DetailsViewModel.swift in Sources */,
 				66C8828A2CF324D600626D35 /* UIView+Extensions.swift in Sources */,
@@ -886,6 +886,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		666078262CFA5F59003BCADA /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.1;
+			};
+		};
 		66D1D42B2CE6794900F546B2 /* XCRemoteSwiftPackageReference "CombineCocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CombineCommunity/CombineCocoa";
@@ -909,6 +917,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66D1D42B2CE6794900F546B2 /* XCRemoteSwiftPackageReference "CombineCocoa" */;
 			productName = CombineCocoa;
+		};
+		666078272CFA5F59003BCADA /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 666078262CFA5F59003BCADA /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		66D1D4342CE67AFE00F546B2 /* KeychainSwift */ = {
 			isa = XCSwiftPackageProductDependency;

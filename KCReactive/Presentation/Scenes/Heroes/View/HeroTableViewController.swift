@@ -1,5 +1,6 @@
 import UIKit
 import Combine
+import Kingfisher
 
 class HeroTableViewController: UIViewController {
     
@@ -142,7 +143,14 @@ extension HeroTableViewController: UITableViewDataSource {
         
         if let url = URL(string: hero.photo) {
             cell.photo.accessibilityIdentifier = hero.id.uuidString
-            cell.photo.loadImageRemote(url: url)
+            cell.photo.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "person"),
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ]
+            )
         }
         
         cell.selectionStyle = .none
