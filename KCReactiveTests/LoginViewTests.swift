@@ -1,68 +1,61 @@
-//
-//  LoginViewControllerTests.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 25/11/24.
-//
-
 import XCTest
 @testable import KCReactive
 
 final class LoginViewTests: XCTestCase {
     
     func testUIErrorView() async throws {
-        // Crear una instancia de LoginUseCaseFake
+        // Initialize LoginUseCaseFake
         let loginUseCaseFake = LoginUseCaseFake()
-        XCTAssertNotNil(loginUseCaseFake, "LoginUseCaseFake debería ser inicializable")
+        XCTAssertNotNil(loginUseCaseFake, "LoginUseCaseFake should initialize successfully")
         
-        // Crear una instancia de LoginViewModel usando el caso de uso falso
+        // Initialize LoginViewModel using the fake use case
         let loginViewModel = LoginViewModel(loginUseCase: loginUseCaseFake)
-        XCTAssertNotNil(loginViewModel, "LoginViewModel debería ser inicializable")
+        XCTAssertNotNil(loginViewModel, "LoginViewModel should initialize successfully")
         
-        // Simular un estado de error y mensaje en el ViewModel
+        // Simulate an error state in the ViewModel
         loginViewModel.userMessage = (message: "Error Testing", isError: true)
         
-        // Crear el LoginViewController con el ViewModel simulado
+        // Initialize LoginViewController with the fake ViewModel
         let loginViewController = await LoginViewController(viewModel: LoginViewModel())
-        XCTAssertNotNil(loginViewController, "LoginViewController debería ser inicializable")
+        XCTAssertNotNil(loginViewController, "LoginViewController should initialize successfully")
         
-        // Cargar la vista del controlador
+        // Load the view controller's view
         await loginViewController.loadViewIfNeeded()
         
-        // Verificar que el mensaje de error se muestra correctamente
+        // Verify the error message is displayed correctly
         if let userMessage = loginViewModel.userMessage {
-            XCTAssertEqual(userMessage.message, "Error Testing", "El mensaje de error debería coincidir con el esperado")
-            XCTAssertTrue(userMessage.isError, "El mensaje debería marcarse como error")
+            XCTAssertEqual(userMessage.message, "Error Testing", "Error message should match the expected value")
+            XCTAssertTrue(userMessage.isError, "The message should be marked as an error")
         } else {
-            XCTFail("No se configuró el mensaje de error en el ViewModel")
+            XCTFail("Error message was not set in the ViewModel")
         }
     }
     
     func testUILoginViewInitialization() {
-        // Crear instancia del LoginViewController
+        // Initialize LoginViewController
         let loginViewController = LoginViewController()
-        XCTAssertNotNil(loginViewController, "El LoginViewController debería ser inicializable")
+        XCTAssertNotNil(loginViewController, "LoginViewController should initialize successfully")
         
-        // Cargar la vista del controlador
+        // Load the view controller's view
         loginViewController.loadViewIfNeeded()
         
-        // Verificar que los elementos de la interfaz existen
+        // Verify UI elements exist
         let userTextField = loginViewController.value(forKey: "userTextField") as? UITextField
         let passwordTextField = loginViewController.value(forKey: "passwordTextField") as? UITextField
         let loginButton = loginViewController.value(forKey: "loginButton") as? UIButton
         
-        XCTAssertNotNil(userTextField, "El campo de texto de usuario debería existir")
-        XCTAssertNotNil(passwordTextField, "El campo de texto de contraseña debería existir")
-        XCTAssertNotNil(loginButton, "El botón de login debería existir")
+        XCTAssertNotNil(userTextField, "User text field should exist")
+        XCTAssertNotNil(passwordTextField, "Password text field should exist")
+        XCTAssertNotNil(loginButton, "Login button should exist")
         
-        // Verificar el estado inicial
-        XCTAssertTrue(userTextField?.isHidden ?? false, "El campo de usuario debería estar oculto inicialmente")
-        XCTAssertTrue(passwordTextField?.isHidden ?? false, "El campo de contraseña debería estar oculto inicialmente")
-        XCTAssertTrue(loginButton?.isHidden ?? false, "El botón de login debería estar oculto inicialmente")
+        // Verify initial state
+        XCTAssertTrue(userTextField?.isHidden ?? false, "User text field should be initially hidden")
+        XCTAssertTrue(passwordTextField?.isHidden ?? false, "Password text field should be initially hidden")
+        XCTAssertTrue(loginButton?.isHidden ?? false, "Login button should be initially hidden")
     }
     
-    
     func testHandleLoginError_InvalidCredentials() {
+        // Simulate invalid credentials error
         let loginUseCaseFake = LoginUseCaseFake()
         let loginViewModel = LoginViewModel(loginUseCase: loginUseCaseFake)
         
@@ -71,21 +64,21 @@ final class LoginViewTests: XCTestCase {
         XCTAssertEqual(
             loginViewModel.userMessage?.message,
             LocalizedStrings.Errors.invalidCredentials,
-            "El mensaje de error debería ser el esperado para credenciales inválidas"
+            "Error message should match the expected value for invalid credentials"
         )
         XCTAssertTrue(
             loginViewModel.userMessage?.isError ?? false,
-            "El mensaje debería marcarse como error"
+            "Message should be marked as an error"
         )
         XCTAssertEqual(
             loginViewModel.state,
             .showLogin,
-            "El estado debería ser .showLogin después de un error de credenciales inválidas"
+            "State should be .showLogin after an invalid credentials error"
         )
     }
     
-    
     func testHandleLoginError_AccessDenied() {
+        // Simulate access denied error
         let loginUseCaseFake = LoginUseCaseFake()
         let loginViewModel = LoginViewModel(loginUseCase: loginUseCaseFake)
         
@@ -94,20 +87,21 @@ final class LoginViewTests: XCTestCase {
         XCTAssertEqual(
             loginViewModel.userMessage?.message,
             LocalizedStrings.Errors.accessDenied,
-            "El mensaje de error debería ser el esperado para acceso denegado"
+            "Error message should match the expected value for access denied"
         )
         XCTAssertTrue(
             loginViewModel.userMessage?.isError ?? false,
-            "El mensaje debería marcarse como error"
+            "Message should be marked as an error"
         )
         XCTAssertEqual(
             loginViewModel.state,
             .showLogin,
-            "El estado debería ser .showLogin después de un error de acceso denegado"
+            "State should be .showLogin after an access denied error"
         )
     }
     
     func testHandleLoginError_ServerError() {
+        // Simulate server error
         let loginUseCaseFake = LoginUseCaseFake()
         let loginViewModel = LoginViewModel(loginUseCase: loginUseCaseFake)
         
@@ -116,20 +110,21 @@ final class LoginViewTests: XCTestCase {
         XCTAssertEqual(
             loginViewModel.userMessage?.message,
             String(format: LocalizedStrings.Errors.serverError, 500),
-            "El mensaje de error debería incluir el código de error del servidor"
+            "Error message should include the server error code"
         )
         XCTAssertTrue(
             loginViewModel.userMessage?.isError ?? false,
-            "El mensaje debería marcarse como error"
+            "Message should be marked as an error"
         )
         XCTAssertEqual(
             loginViewModel.state,
             .showLogin,
-            "El estado debería ser .showLogin después de un error del servidor"
+            "State should be .showLogin after a server error"
         )
     }
     
     func testHandleLoginError_UnexpectedError() {
+        // Simulate unexpected error
         let loginUseCaseFake = LoginUseCaseFake()
         let loginViewModel = LoginViewModel(loginUseCase: loginUseCaseFake)
         
@@ -138,16 +133,16 @@ final class LoginViewTests: XCTestCase {
         XCTAssertEqual(
             loginViewModel.userMessage?.message,
             LocalizedStrings.Errors.unexpectedError,
-            "El mensaje de error debería ser el esperado para un error inesperado"
+            "Error message should match the expected value for an unexpected error"
         )
         XCTAssertTrue(
             loginViewModel.userMessage?.isError ?? false,
-            "El mensaje debería marcarse como error"
+            "Message should be marked as an error"
         )
         XCTAssertEqual(
             loginViewModel.state,
             .showLogin,
-            "El estado debería ser .showLogin después de un error inesperado"
+            "State should be .showLogin after an unexpected error"
         )
     }
 }

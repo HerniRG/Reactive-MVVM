@@ -1,88 +1,74 @@
-//
-//  HeroUseCase.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 20/11/24.
-//
-
 import Foundation
 
+/// Use case for managing heroes, including fetching and logout operations.
 final class HeroUseCase: HeroUseCaseProtocol {
     
     var heroRepo: HeroRepositoryProtocol
     
+    /// Initializes the use case with a hero repository.
     init(heroRepo: HeroRepositoryProtocol = DefaultHeroRepository(heroService: HeroService())) {
         self.heroRepo = heroRepo
     }
     
-    /// Obtiene la lista de héroes, opcionalmente filtrados por nombre.
-    /// Ordena los héroes antes de devolverlos.
+    /// Fetches a list of heroes, optionally filtered by name, and sorts them.
+    /// - Parameter filter: A filter string to search for heroes by name.
+    /// - Returns: A sorted list of heroes matching the filter.
     func getHeroes(filter: String) async throws -> [Hero] {
         let heroes = try await heroRepo.getHeroes(filter: filter)
         return sortHeroes(heroes)
     }
     
-    /// Elimina el token almacenado, realizando el logout del usuario.
+    /// Deletes the stored token to log out the user.
     func logout() {
         TokenManager.shared.deleteToken()
     }
     
-    /// Ordena los héroes alfabéticamente por nombre.
-    /// - Parameter heroes: Lista de héroes a ordenar.
-    /// - Returns: Lista de héroes ordenados.
+    /// Sorts heroes alphabetically by name.
+    /// - Parameter heroes: The list of heroes to sort.
+    /// - Returns: A sorted list of heroes.
     private func sortHeroes(_ heroes: [Hero]) -> [Hero] {
         return heroes.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }
 }
 
-/// `HeroUseCaseFake` es una implementación simulada de `HeroUseCaseProtocol` para pruebas unitarias.
-///
-/// - Simula:
-///   - `getHeroes(filter:)`: Devuelve una lista predefinida de héroes (`Goku` y `Vegeta`), aplicando un filtro.
-///   - `logout()`: Simula un logout con un mensaje en consola.
-///
-/// Ejemplo:
-/// ```
-/// let fakeUseCase = HeroUseCaseFake()
-/// let heroes = try await fakeUseCase.getHeroes(filter: "")
-/// assert(heroes.count == 2) // Devuelve los dos héroes
-/// fakeUseCase.logout() // Imprime "Fake logout executed"
-/// ```
-
+/// A fake implementation of `HeroUseCaseProtocol` for unit testing.
 final class HeroUseCaseFake: HeroUseCaseProtocol {
     
     var heroRepo: any HeroRepositoryProtocol
     
-    /// Lista de héroes simulados.
+    /// Predefined list of fake heroes for testing.
     private let fakeHeroes: [Hero] = [
         Hero(
             id: UUID(),
             name: "Goku",
-            description: "El Saiyan más poderoso.",
+            description: "The most powerful Saiyan.",
             photo: "https://example.com/goku.jpg",
             favorite: true
         ),
         Hero(
             id: UUID(),
             name: "Vegeta",
-            description: "El príncipe de los Saiyans.",
+            description: "The prince of all Saiyans.",
             photo: "https://example.com/vegeta.jpg",
             favorite: false
         ),
         Hero(
             id: UUID(),
             name: "Piccolo",
-            description: "El namekiano más poderoso.",
+            description: "The strongest Namekian.",
             photo: "https://example.com/piccolo.jpg",
             favorite: false
         )
     ]
     
+    /// Initializes the fake use case with a hero repository.
     init(heroRepo: any HeroRepositoryProtocol = DefaultHeroRepository(heroService: HeroService())) {
         self.heroRepo = heroRepo
     }
     
-    /// Simula la obtención de héroes, devolviendo héroes ordenados.
+    /// Simulates fetching heroes, applying a filter and sorting them.
+    /// - Parameter filter: A filter string to search for heroes by name.
+    /// - Returns: A sorted list of filtered fake heroes.
     func getHeroes(filter: String) async throws -> [Hero] {
         let filteredHeroes = filter.isEmpty
             ? fakeHeroes
@@ -90,11 +76,12 @@ final class HeroUseCaseFake: HeroUseCaseProtocol {
         return sortHeroes(filteredHeroes)
     }
     
-    /// Ordena los héroes alfabéticamente por nombre.
+    /// Sorts heroes alphabetically by name.
     private func sortHeroes(_ heroes: [Hero]) -> [Hero] {
         return heroes.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }
     
+    /// Simulates a logout operation by printing a message to the console.
     func logout() {
         print("Fake logout executed")
     }

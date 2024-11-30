@@ -1,69 +1,58 @@
-//
-//  LoginUseCase.swift
-//  KCReactive
-//
-//  Created por Hernán Rodríguez el 20/11/24.
-//
-
 import Foundation
 
+/// Use case for handling user login and token management.
 final class LoginUseCase: LoginUseCaseProtocol {
     
     var repo: LoginRepositoryProtocol
     
+    /// Initializes the use case with a login repository.
     init(repo: LoginRepositoryProtocol = DefaultLoginRepository(network: NetworkLogin())) {
         self.repo = repo
     }
 
-    /// Realiza el login de usuario y almacena el token si es exitoso.
+    /// Logs in the user and saves the token if successful.
+    /// - Parameters:
+    ///   - user: The username.
+    ///   - password: The user's password.
+    /// - Returns: `true` if the login was successful.
     func loginApp(user: String, password: String) async throws -> Bool {
-        // Simplemente delega al repositorio y guarda el token si el login tiene éxito
         let token = try await repo.login(user: user, password: password)
         TokenManager.shared.saveToken(token)
         return true
     }
 
-    /// Verifica si existe un token válido almacenado.
+    /// Checks if a valid token exists.
+    /// - Returns: `true` if a valid token is stored.
     func checkToken() -> Bool {
         if let token = TokenManager.shared.loadToken(), !token.isEmpty {
             return true
-        } else {
-            return false
         }
+        return false
     }
 }
 
-/// `LoginUseCaseFake` es una implementación simulada del protocolo `LoginUseCaseProtocol`,
-/// diseñada para pruebas unitarias o de integración. Simula el comportamiento del caso de uso
-/// de login, permitiendo emular un flujo exitoso sin depender de un backend real.
-///
-/// - `loginApp(user:password:)`: Simula un login exitoso y guarda un token ficticio ("LoginFakeSuccess")
-///   en el `TokenManager`, devolviendo siempre `true`.
-/// - `checkToken()`: Simula la existencia de un token válido, devolviendo siempre `true`.
-///
-/// Uso típico:
-/// ```
-/// let fakeUseCase = LoginUseCaseFake()
-/// let loginResult = try await fakeUseCase.loginApp(user: "testUser", password: "testPass")
-/// assert(loginResult == true) // Simula un login exitoso
-/// assert(fakeUseCase.checkToken() == true) // Simula que hay un token válido
-/// ```
-
+/// A fake implementation of `LoginUseCaseProtocol` for testing purposes.
 final class LoginUseCaseFake: LoginUseCaseProtocol {
     
     var repo: LoginRepositoryProtocol
     
+    /// Initializes the fake use case with a login repository.
     init(repo: LoginRepositoryProtocol = DefaultLoginRepository(network: NetworkLogin())) {
         self.repo = repo
     }
 
-    /// Realiza el login de usuario y almacena el token si es exitoso.
+    /// Simulates a successful login by saving a fake token.
+    /// - Parameters:
+    ///   - user: The username.
+    ///   - password: The user's password.
+    /// - Returns: Always returns `true`.
     func loginApp(user: String, password: String) async throws -> Bool {
         TokenManager.shared.saveToken("LoginFakeSuccess")
         return true
     }
 
-    /// Verifica si existe un token válido almacenado.
+    /// Simulates the existence of a valid token.
+    /// - Returns: Always returns `true`.
     func checkToken() -> Bool {
         return true
     }

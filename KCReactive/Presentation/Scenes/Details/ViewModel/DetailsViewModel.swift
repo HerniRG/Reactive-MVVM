@@ -1,43 +1,39 @@
-//
-//  DetailsViewModel.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 19/11/24.
-//
-
 import Combine
 import Foundation
 
 final class DetailsViewModel: ObservableObject {
-    // MARK: - Propiedades Publicadas
+    // MARK: - Published Properties
     @Published var transformations: [Transformation]? = nil
     @Published var isFavorite: Bool
 
-    // MARK: - Propiedades Públicas
+    // MARK: - Public Properties
     let hero: Hero
 
-    // MARK: - Propiedades Privadas
+    // MARK: - Private Properties
     private let transformationUseCase: TransformationUseCaseProtocol
 
-    // MARK: - Inicializador
+    // MARK: - Initializer
+    /// Initializes the ViewModel with a hero and optional transformation use case.
     init(
         hero: Hero,
         transformationUseCase: TransformationUseCaseProtocol = TransformationUseCase()
     ) {
         self.hero = hero
         self.transformationUseCase = transformationUseCase
-        self.isFavorite = hero.favorite ?? false // Inicializamos con el estado del héroe
+        self.isFavorite = hero.favorite ?? false // Set initial favorite state
         
         Task {
             await loadTransformations()
         }
     }
 
-    // MARK: - Métodos Públicos
+    // MARK: - Public Methods
+    /// Toggles the favorite state locally (visual-only, not persisted).
     func toggleFavorite() {
-        isFavorite.toggle() // es solo para un manejo visual, no lo persistimos o llamamos a la api.
+        isFavorite.toggle()
     }
 
+    /// Loads the hero's transformations asynchronously.
     func loadTransformations() async {
         do {
             let fetchedTransformations = try await transformationUseCase.getTransformations(id: hero.id.uuidString)

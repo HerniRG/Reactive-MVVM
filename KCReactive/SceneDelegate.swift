@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 14/11/24.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {

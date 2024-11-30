@@ -1,38 +1,38 @@
 import Combine
 import Foundation
 
-// MARK: - Enumeración del Estado de la Vista
+// MARK: - View State Enumeration
 enum State {
     case loading
     case showLogin
     case navigateToHeroes
 }
 
-// MARK: - ViewModel del Login
+// MARK: - LoginViewModel
 final class LoginViewModel: ObservableObject {
     
-    // MARK: - Publicación de Propiedades
+    // MARK: - Published Properties
     @Published var state: State = .loading
     @Published var userMessage: (message: String, isError: Bool)?
     
-    // MARK: - Propiedades Privadas
+    // MARK: - Private Properties
     private let loginUseCase: LoginUseCaseProtocol
-    private let navigationDelay: UInt64 = 1_000_000_000
+    private let navigationDelay: UInt64 = 1_000_000_000 // 1 second delay in nanoseconds.
     
-    // MARK: - Inicializador
+    // MARK: - Initializer
     init(loginUseCase: LoginUseCaseProtocol = LoginUseCase()) {
         self.loginUseCase = loginUseCase
         initializeState()
     }
     
-    // MARK: - Métodos Públicos
+    // MARK: - Public Methods
     
-    /// Método público para usar la inicialización de estado en tests (auto-login)
+    /// Resets the state for testing purposes (auto-login).
     func triggerAutoLogin() {
         initializeState()
     }
     
-    /// Realiza el login del usuario.
+    /// Executes the login process for the user.
     func login(user: String, password: String) async {
         clearUserMessage()
         updateState(to: .loading)
@@ -57,9 +57,9 @@ final class LoginViewModel: ObservableObject {
     }
 }
 
-// MARK: - Inicialización del Estado
+// MARK: - State Initialization
 private extension LoginViewModel {
-    /// Inicializa el estado de la vista según la existencia de un token.
+    /// Sets the initial state based on token existence.
     func initializeState() {
         if loginUseCase.checkToken() {
             setUserMessage(
@@ -73,27 +73,26 @@ private extension LoginViewModel {
     }
 }
 
-// MARK: - Gestión de Mensajes de Usuario
+// MARK: - User Message Management
 private extension LoginViewModel {
-    /// Limpia el mensaje del usuario.
     func clearUserMessage() {
         userMessage = nil
     }
     
-    /// Establece un mensaje para el usuario.
+    /// Updates the user message with the specified content and error state.
     func setUserMessage(_ message: String, isError: Bool) {
         userMessage = (message: message, isError: isError)
     }
 }
 
-// MARK: - Actualización del Estado
+// MARK: - State Management
 private extension LoginViewModel {
-    /// Actualiza el estado de la vista.
+    /// Updates the view state immediately.
     func updateState(to newState: State) {
         state = newState
     }
     
-    /// Actualiza el estado de la vista con un breve retraso.
+    /// Updates the view state after a delay.
     func updateStateWithDelay(to newState: State) {
         Task {
             try? await Task.sleep(nanoseconds: navigationDelay)
@@ -102,9 +101,9 @@ private extension LoginViewModel {
     }
 }
 
-// MARK: - Gestión de Errores
+// MARK: - Error Handling
 extension LoginViewModel {
-    /// Maneja los errores ocurridos durante el login.
+    /// Handles errors during the login process.
     func handleLoginError(_ error: Error) {
         let message: String
         if let authError = error as? AuthenticationError {

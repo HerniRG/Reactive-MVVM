@@ -1,11 +1,3 @@
-/* 
-  Localizable.strings
-  KCReactive
-
-  Created by Hernán Rodríguez on 24/11/24.
-  
-*/
-
 "Email" = "Email";
 "Password" = "Password";
 "Login" = "Login";

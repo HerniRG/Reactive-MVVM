@@ -1,10 +1,3 @@
-//
-//  KeychainTests.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 25/11/24.
-//
-
 import XCTest
 @testable import KCReactive
 
@@ -13,18 +6,18 @@ final class KeychainTests: XCTestCase {
     func testKeyChainLibrary() throws {
         let tokenManager = TokenManager()
         
-        // Verificar que el objeto se crea correctamente
-        XCTAssertNotNil(tokenManager, "TokenManager debería inicializarse correctamente")
+        // Verify that the TokenManager initializes correctly
+        XCTAssertNotNil(tokenManager, "TokenManager should initialize successfully")
         
-        // Guardar un token y verificar que se guardó correctamente
+        // Save a token and verify it was saved correctly
         tokenManager.saveToken("123")
         let savedToken = tokenManager.loadToken()
-        XCTAssertNotNil(savedToken, "El token debería haberse guardado correctamente")
-        XCTAssertEqual(savedToken, "123", "El token recuperado no coincide con el guardado")
+        XCTAssertNotNil(savedToken, "The token should be saved successfully")
+        XCTAssertEqual(savedToken, "123", "The retrieved token should match the saved token")
         
-        // Eliminar el token y verificar que se eliminó correctamente
+        // Delete the token and verify it was deleted correctly
         tokenManager.deleteToken()
         let deletedToken = tokenManager.loadToken()
-        XCTAssertNil(deletedToken, "El token debería haberse eliminado correctamente")
+        XCTAssertNil(deletedToken, "The token should be deleted successfully")
     }
 }

@@ -1,10 +1,3 @@
-//
-//  HeroTableViewCell.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 15/11/24.
-//
-
 import UIKit
 
 class HeroTableViewCell: UITableViewCell {
@@ -19,22 +12,22 @@ class HeroTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        // Configuración del containerView
+        // Configure containerView appearance
         containerView.layer.cornerRadius = 12
         containerView.layer.masksToBounds = true
         containerView.backgroundColor = UIColor.systemGray6
-        containerView.layer.borderColor = UIColor.black.cgColor
+        containerView.layer.borderColor = UIColor.borderDarkAndLight.cgColor
         containerView.layer.borderWidth = 0.2
         
-        // Añadir sombra al containerView
+        // Add shadow to containerView
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.2 // Sombra más marcada
+        layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize(width: 0, height: 4)
         layer.shadowRadius = 6
         layer.masksToBounds = false
         backgroundColor = .clear
         
-        // Configuración de la imagen con bordes redondeados selectivos
+        // Configure selective rounded corners for the photo
         let maskPath = UIBezierPath(
             roundedRect: photo.bounds,
             byRoundingCorners: [.topLeft, .bottomLeft],
@@ -44,17 +37,19 @@ class HeroTableViewCell: UITableViewCell {
         shape.path = maskPath.cgPath
         photo.layer.mask = shape
         
-        // Añadir borde a la imagen
+        // Add border to the photo
         let borderLayer = CAShapeLayer()
         borderLayer.path = maskPath.cgPath
-        borderLayer.strokeColor = UIColor.systemGray4.cgColor
+        borderLayer.strokeColor = UIColor.borderDarkAndLight.cgColor
         borderLayer.lineWidth = 1.5
         borderLayer.fillColor = UIColor.clear.cgColor
         borderLayer.frame = photo.bounds
         photo.layer.addSublayer(borderLayer)
         
+        // Ensure the photo respects clipping
         photo.clipsToBounds = true
         
+        // Configure title text color
         title.textColor = UIColor.systemGray
     }
 }

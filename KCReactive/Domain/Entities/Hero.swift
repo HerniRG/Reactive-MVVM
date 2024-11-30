@@ -1,10 +1,3 @@
-//
-//  Hero.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 14/11/24.
-//
-
 import Foundation
 
 struct Hero: Codable, Identifiable, Hashable {

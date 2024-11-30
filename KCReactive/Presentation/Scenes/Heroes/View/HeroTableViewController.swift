@@ -37,7 +37,8 @@ private extension HeroTableViewController {
         setupNavigationBar()
         setupTableView()
     }
-    
+
+    /// Configures the navigation bar with a title and logout button.
     func setupNavigationBar() {
         title = LocalizedStrings.Heroes.title
         
@@ -50,7 +51,8 @@ private extension HeroTableViewController {
         logoutButton.tintColor = .red
         navigationItem.rightBarButtonItem = logoutButton
     }
-    
+
+    /// Configures the table view's layout and behavior.
     func setupTableView() {
         tableView.register(UINib(nibName: "HeroTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         tableView.dataSource = self
@@ -95,11 +97,13 @@ private extension HeroTableViewController {
 
 // MARK: - Actions
 private extension HeroTableViewController {
+    /// Logs out the user and navigates back to the login screen.
     @objc func logoutTapped() {
         viewModel.logout()
         navigateToLogin()
     }
-    
+
+    /// Navigates to the login screen.
     func navigateToLogin() {
         navigationController?.setViewControllers([LoginViewController()], animated: true)
     }
@@ -107,6 +111,7 @@ private extension HeroTableViewController {
 
 // MARK: - Animations
 private extension HeroTableViewController {
+    /// Animates the cells in the table view with a bounce effect.
     func animateTableView() {
         let cells = tableView.visibleCells
         let tableHeight = tableView.bounds.size.height
@@ -126,15 +131,13 @@ extension HeroTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.heroes.count
     }
-    
-    // HeroTableViewController.swift
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? HeroTableViewCell else {
             return UITableViewCell()
         }
         
-        // Reset the cell's state
+        // Reset the cell's state to avoid reusing incorrect data.
         cell.photo.image = UIImage(named: "person")
         cell.title.text = nil
         

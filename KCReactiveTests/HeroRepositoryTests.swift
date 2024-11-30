@@ -1,22 +1,19 @@
-//
-//  HeroRepositoryTests.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 25/11/24.
-//
-
 import XCTest
 @testable import KCReactive
 
 final class HeroRepositoryTests: XCTestCase {
     
     func testHeroRepository() async throws {
+        // Simulate a successful network response
         let networkFake = HeroServiceFake(scenario: .success)
-        let heroRepository = DefaultHeroRepository(heroService: networkFake)
-        XCTAssertNotNil(heroRepository, "HeroRepository debería ser inicializable")
         
+        // Initialize the repository with the fake service
+        let heroRepository = DefaultHeroRepository(heroService: networkFake)
+        XCTAssertNotNil(heroRepository, "HeroRepository should be initializable")
+        
+        // Fetch heroes and verify the response
         let heroes = try await heroRepository.getHeroes(filter: "")
-        XCTAssertNotNil(heroes, "La respuesta de héroes no debería ser nil")
-        XCTAssertEqual(heroes.count, 3, "Debería haber 3 héroes en el caso simulado")
+        XCTAssertNotNil(heroes, "The hero response should not be nil")
+        XCTAssertEqual(heroes.count, 3, "There should be 3 heroes in the simulated case")
     }
 }

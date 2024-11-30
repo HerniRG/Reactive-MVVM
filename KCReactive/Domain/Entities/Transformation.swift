@@ -1,10 +1,3 @@
-//
-//  Transformation.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 15/11/24.
-//
-
 import Foundation
 
 struct Transformation: Codable, Hashable {

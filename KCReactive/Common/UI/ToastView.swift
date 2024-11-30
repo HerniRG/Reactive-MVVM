@@ -1,15 +1,11 @@
-//
-//  ToastView.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 20/11/24.
-//
-
-
 import UIKit
 
+// MARK: - ToastView
+/// Custom view to display temporary "toast" messages.
 final class ToastView: UIView {
     
+    // MARK: - Properties
+    /// Label used to display the toast message.
     private let messageLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -19,6 +15,7 @@ final class ToastView: UIView {
         return label
     }()
     
+    // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -29,6 +26,8 @@ final class ToastView: UIView {
         setupView()
     }
     
+    // MARK: - View Configuration
+    /// Configures the appearance and constraints of the view.
     private func setupView() {
         addSubview(messageLabel)
         backgroundColor = .black
@@ -43,11 +42,14 @@ final class ToastView: UIView {
         ])
     }
     
+    // MARK: - Public Methods
+    /// Configures the toast message and its background color.
     func configure(message: String, backgroundColor: UIColor) {
         self.messageLabel.text = message
         self.backgroundColor = backgroundColor
     }
     
+    /// Displays the toast in a specific view and automatically hides it after a duration.
     func show(in view: UIView, duration: TimeInterval = 2.0) {
         view.addSubview(self)
         self.alpha = 0
@@ -55,9 +57,10 @@ final class ToastView: UIView {
         NSLayoutConstraint.activate([
             self.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             self.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            self.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16) // Posición superior
+            self.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
         ])
         
+        // Fade-in and fade-out animations
         UIView.animate(withDuration: 0.3, animations: {
             self.alpha = 1
         }) { _ in

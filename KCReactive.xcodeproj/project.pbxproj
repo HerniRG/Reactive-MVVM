@@ -178,7 +178,6 @@
 				66813B0E2CEE374500D1FACE /* Protocols */,
 				66813B0F2CEE378A00D1FACE /* UseCases */,
 				66813AC52CEE31EA00D1FACE /* Entities */,
-				66813B112CEE37D300D1FACE /* Extensions */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -296,13 +295,6 @@
 				66813B1D2CEE410200D1FACE /* LoginUseCase.swift */,
 			);
 			path = UseCases;
-			sourceTree = "<group>";
-		};
-		66813B112CEE37D300D1FACE /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		66813B122CEE37EC00D1FACE /* Login */ = {

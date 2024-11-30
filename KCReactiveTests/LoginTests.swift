@@ -1,10 +1,3 @@
-//
-//  LoginTests.swift
-//  KCReactive
-//
-//  Created by Hernán Rodríguez on 25/11/24.
-//
-
 import XCTest
 import Combine
 @testable import KCReactive
@@ -13,85 +6,86 @@ final class LoginTests: XCTestCase {
     
     func testLoginFake() async throws {
         let KC = TokenManager()
-        XCTAssertNotNil(KC, "TokenManager debería inicializarse correctamente")
-
-        KC.deleteToken() // Asegúrate de que no haya tokens persistentes al inicio.
-        XCTAssertNil(KC.loadToken(), "El token debería ser nil al inicio de la prueba")
+        XCTAssertNotNil(KC, "TokenManager should initialize successfully")
         
-        // Crear instancia del caso de uso simulado
+        // Ensure no tokens persist at the start
+        KC.deleteToken()
+        XCTAssertNil(KC.loadToken(), "Token should be nil at the start of the test")
+        
+        // Create a fake use case instance
         let obj = LoginUseCaseFake()
-        XCTAssertNotNil(obj, "LoginUseCaseFake debería inicializarse correctamente")
+        XCTAssertNotNil(obj, "LoginUseCaseFake should initialize successfully")
         
-        // Validar token antes del login
+        // Validate token state before login
         let initialTokenState = KC.loadToken()
-        XCTAssertNil(initialTokenState, "El token no debería existir antes del login")
+        XCTAssertNil(initialTokenState, "Token should not exist before login")
         
-        // Verificar si hay un token válido (simulado)
+        // Check for a valid token (simulated)
         let tokenCheck = obj.checkToken()
-        XCTAssertEqual(tokenCheck, true, "checkToken() debería devolver true en el caso simulado")
+        XCTAssertEqual(tokenCheck, true, "checkToken() should return true in the simulated case")
         
-        // Realizar login
+        // Perform login
         let loginResult = try await obj.loginApp(user: "fakeUser", password: "fakePassword")
-        XCTAssertEqual(loginResult, true, "El login debería ser exitoso en el caso simulado")
+        XCTAssertEqual(loginResult, true, "Login should succeed in the simulated case")
         
-        // Validar que el token fue guardado
+        // Validate that the token was saved
         let jwt = KC.loadToken()
-        XCTAssertNotNil(jwt, "El token debería haberse guardado después del login")
-        XCTAssertEqual(jwt, "LoginFakeSuccess", "El token guardado debería ser 'LoginFakeSuccess'")
+        XCTAssertNotNil(jwt, "Token should be saved after login")
+        XCTAssertEqual(jwt, "LoginFakeSuccess", "Saved token should match 'LoginFakeSuccess'")
         
-        // Cerrar sesión simulada (implementar eliminación de token en TokenManager)
+        // Simulate logout and validate token deletion
         KC.deleteToken()
         let afterLogoutToken = KC.loadToken()
-        XCTAssertNil(afterLogoutToken, "El token debería haberse eliminado después del logout")
+        XCTAssertNil(afterLogoutToken, "Token should be deleted after logout")
     }
     
     func testLoginReal() async throws {
-        // Instancia de KeyChain
         let KC = TokenManager()
-        XCTAssertNotNil(KC, "TokenManager debería ser inicializable")
+        XCTAssertNotNil(KC, "TokenManager should initialize successfully")
         
-        // Reiniciar el token antes de comenzar la prueba
+        // Reset token before starting the test
         KC.deleteToken()
         let initialToken = KC.loadToken()
-        XCTAssertNil(initialToken, "El token debería ser nil después del reinicio")
+        XCTAssertNil(initialToken, "Token should be nil after reset")
         
-        // Configurar las dependencias
+        // Set up dependencies
         let network = NetworkLoginFake(scenario: .success)
         let repo = LoginRepositoryFake(network: network)
         let userCase = LoginUseCase(repo: repo)
-        XCTAssertNotNil(userCase, "LoginUseCase debería ser inicializable")
+        XCTAssertNotNil(userCase, "LoginUseCase should initialize successfully")
         
-        // Validación inicial de token
+        // Validate token state before login
         let tokenValidation = userCase.checkToken()
-        XCTAssertEqual(tokenValidation, false, "El token debería ser inválido al inicio")
+        XCTAssertEqual(tokenValidation, false, "Token should be invalid at the start")
         
-        // Simular login
+        // Simulate login
         let loginResult = try await userCase.loginApp(user: "testUser", password: "testPassword")
-        XCTAssertEqual(loginResult, true, "El login debería ser exitoso en el caso simulado")
+        XCTAssertEqual(loginResult, true, "Login should succeed in the simulated case")
         
-        // Verificar que el token se guardó correctamente
+        // Verify that the token was saved
         var jwt = KC.loadToken()
-        XCTAssertNotNil(jwt, "El token debería haberse guardado después del login")
-        XCTAssertEqual(jwt, "LoginFakeSuccess", "El token guardado debería ser 'LoginFakeSuccess'")
+        XCTAssertNotNil(jwt, "Token should be saved after login")
+        XCTAssertEqual(jwt, "LoginFakeSuccess", "Saved token should match 'LoginFakeSuccess'")
         
-        // Cerrar sesión
+        // Logout and validate token deletion
         KC.deleteToken()
         jwt = KC.loadToken()
-        XCTAssertNil(jwt, "El token debería ser nil después del logout")
+        XCTAssertNil(jwt, "Token should be nil after logout")
     }
     
     func testLoginAutoLoginAsincrono() throws {
         var subscriptions = Set<AnyCancellable>()
-        let expectation = self.expectation(description: "Estado de login automático")
+        let expectation = self.expectation(description: "Auto-login state")
         
         let viewModel = LoginViewModel(loginUseCase: LoginUseCaseFake())
-        XCTAssertNotNil(viewModel, "El ViewModel debería inicializarse correctamente")
+        XCTAssertNotNil(viewModel, "ViewModel should initialize successfully")
         
         var didFulfill = false
         
+        // Observe state changes
         viewModel.$state
             .sink { state in
-                print("Estado actual: \(state)")
+                print("Current state: \(state)")
                 if state == .navigateToHeroes, !didFulfill {
                     didFulfill = true
                     expectation.fulfill()
@@ -99,6 +93,7 @@ final class LoginTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
+        // Trigger auto-login
         viewModel.triggerAutoLogin()
         
         waitForExpectations(timeout: 10)
